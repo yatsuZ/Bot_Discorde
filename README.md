@@ -27,16 +27,31 @@ J'expliquerais step by step comment crée son propre BOT.
 
 **Rien j'ai pas fini.**
 
-## Comment avoir mon bot dans votre serveur 
+## Comment avoir mon bot dans votre serveur
 
 **Rien j'ai pas fini.**
+
+## Etape a suivre pour le faire sois meme
+
+Aller sur [discorde devloper](https://discord.com/developers/applications).
+Creat a new application.
+Le configurer comme vous le shouaite.
+allez dans "OAuth2 URL Generator",
+Activer "Presence Intent", "Server Members Intent" et "MESSAGE CONTENT INTENT".
+lui donner le role copier et coller le lien
+sur la barre de navigation, ajouter le bot dans le serveur que vous shouaitez.
+Et pour le code cree le fichier "code/.env"
+qui contiendra :
+tokenBot = <**Le token de votre bot**>.
+puis le code Bot.py ajoutera les fonctionalité a votre bot.
 
 ---
 
 ## Contribuer
 
 Si vous voulez maidez vous pouvez :
-1. Metre une etoile si vous aimez mon projet et me soutenir :)
+
+1. Metre une etoile si vous aimez mon projet et me soutenir 😊.
 2. Me signalez si il y a des cas d'erreur, de beug, d'orthographe et grammaire.
 
 ## Chose aprise
@@ -64,4 +79,3 @@ Ce projet a été réalisé par MOI !!! :smiley:
 | E-mail42📩    | yzaoui@student.42.fr                                                 |
 | Linkdin👨‍💻     | [Yassine Zaoui](https://www.linkedin.com/in/yassine-zaoui-23b005229/)|
 | Instagram📸   | [@yatsu__officiel](https://www.instagram.com/yatsu__officiel/)       |
-
