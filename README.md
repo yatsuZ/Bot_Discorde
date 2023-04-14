@@ -27,7 +27,6 @@ Voici la liste exostive des fonctionale que mon bot pourras faire :
 | !History [X]       | Le bot montre les X dernier commande, avec une structure de pile. 📅   |
 | !Jouons            | Le bot proposera des petit jeux. 🎴                                      |
 
-Je ne sais pas encore comment nommé ce bot et sa pdp.
 Ce repo permet de publier mon travail et une demonstration de creation d'un bot avec des fonctionalité simple.
 
 J'expliquerais step by step comment crée son propre BOT.
