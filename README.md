@@ -1,11 +1,16 @@
 # Bot_Discorde
 
-Creation d'un BOT discorde en python <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Robot.png" alt="Robot" width="25" height="25" />. 
+Creation d'un BOT discorde en python <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Robot.png" alt="Robot" width="25" height="25" />.
 
 ## Description
 
-Mon Bot pourra dire bonjour<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Waving%20Hand.png" alt="Waving Hand" width="25" height="25" />.
+Voici YassBot.
 
+![YassBot photo de profil](img/Yasbot_PDP.jpg)
+
+Le petit nouveaux, YassBot = Yassine + Bot.
+
+Mon Bot pourra dire bonjour<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Waving%20Hand.png" alt="Waving Hand" width="25" height="25" />.
 jouer à un petit jeux, ou on devra deviner un chiffre entre 1 et 100 🎲.
 Ce sont les seuls fonctionalité precise que je compte implementer pour l'instant.
 Mais jespere que bot poura gerer les images 🖼️, les videos 📺, le son 🎝, les reaction (les emojies en dessous des commentaire.) ✔️.
@@ -14,7 +19,7 @@ Voici la liste exostive des fonctionale que mon bot pourras faire :
 
 | Commande           | Description                                                          |
 | ------------------ | -------------------------------------------------------------------- |
-| !Salut             | Le bot affichera: salut "nom de l'utilisateur".<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Waving%20Hand.png" alt="Waving Hand" width="25" height="25" />                      |
+| !wsh             | Le bot affichera: salut "nom de l'utilisateur".<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Waving%20Hand.png" alt="Waving Hand" width="25" height="25" />                      |
 | !History [X]       | Le bot montre les X dernier commande, avec une structure de pile. 📅   |
 | !Jouons            | Le bot proposera des petit jeux. 🎴                                      |
 
@@ -33,17 +38,27 @@ J'expliquerais step by step comment crée son propre BOT.
 
 ## Etape a suivre pour le faire sois meme
 
-Aller sur [discorde devloper](https://discord.com/developers/applications).
-Creat a new application.
-Le configurer comme vous le shouaite.
-allez dans "OAuth2 URL Generator",
-Activer "Presence Intent", "Server Members Intent" et "MESSAGE CONTENT INTENT".
-lui donner le role copier et coller le lien
-sur la barre de navigation, ajouter le bot dans le serveur que vous shouaitez.
-Et pour le code cree le fichier "code/.env"
+| Aller sur [discorde devloper](https://discord.com/developers/applications).
+|
+| Creat a new application.
+|
+| Le configurer comme vous le shouaite.
+|
+| allez dans "OAuth2 URL Generator",
+|
+| Activer "Presence Intent", "Server Members Intent" et "MESSAGE CONTENT INTENT".
+|
+| lui donner le role copier et coller le lien sur la barre de navigation, ajouter le bot dans le serveur que vous shouaitez.
+|
+| Et pour le code cree le fichier "code/.env"
+
 qui contiendra :
-tokenBot = <**Le token de votre bot**>.
-puis le code Bot.py ajoutera les fonctionalité a votre bot.
+
+| tokenBot = <**Le token de votre bot**>.
+|
+| puis le code ***Bot.py*** ajoutera les fonctionalité a votre bot.
+
+Executer le code est votre bot aura les fonction qu'il y a dans ***Bot.py*** .
 
 ---
 
@@ -63,6 +78,9 @@ J'ai aris une partie de la doc de discorde pour les creation d'un bot
 Je tiens remercie mes camarade qui m'ont aide pour ce projet donc Merci
 
 - **prenom** pour **en quoi cette personne ma aide.**
+- [kvroooo](https://github.com/kvroooo) pour la pdp de mon BOT.
+- [Pepito](https://github.com/PepitoMercurio) et Kwency pour les explications / aide sur les configuration a faire pour le bot discorde,
+et le code.
 - Et à ce qui me soutienne :heart:.
 
 ## Auteur
