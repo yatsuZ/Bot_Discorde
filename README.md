@@ -6,7 +6,9 @@ Creation d'un BOT discorde en python <img src="https://raw.githubusercontent.com
 
 Voici YassBot.
 
-![YassBot photo de profil](img/Yasbot_PDP.jpg)
+<p align="center">
+  <img src="img/Yasbot_PDP.jpg" alt="YassBot photo de profil" style="border-radius: 50%;">
+</p>
 
 Le petit nouveaux, YassBot = Yassine + Bot.
 
