@@ -13,7 +13,9 @@ Voici YassBot.
 Le petit nouveaux, YassBot = Yassine + Bot.
 
 Mon Bot pourra dire bonjour<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Waving%20Hand.png" alt="Waving Hand" width="25" height="25" />.
-jouer à un petit jeux, ou on devra deviner un chiffre entre 1 et 100 🎲.
+
+Jouer à un petit jeux, ou on devra deviner un chiffre entre 1 et 100 🎲.
+
 Ce sont les seuls fonctionalité precise que je compte implementer pour l'instant.
 Mais jespere que bot poura gerer les images 🖼️, les videos 📺, le son 🎝, les reaction (les emojies en dessous des commentaire.) ✔️.
 
