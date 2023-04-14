@@ -31,6 +31,8 @@ J'expliquerais step by step comment crée son propre BOT.
 
 **Rien j'ai pas fini.**
 
+---
+
 ## Contribuer
 
 Si vous voulez maidez vous pouvez :
