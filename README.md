@@ -41,25 +41,25 @@ J'expliquerais step by step comment crée son propre BOT.
 
 ## Etape a suivre pour le faire sois meme
 
-| Aller sur [discorde devloper](https://discord.com/developers/applications).
-|
-| Creat a new application.
-|
-| Le configurer comme vous le shouaite.
-|
-| allez dans "OAuth2 URL Generator",
-|
-| Activer "Presence Intent", "Server Members Intent" et "MESSAGE CONTENT INTENT".
-|
-| lui donner le role copier et coller le lien sur la barre de navigation, ajouter le bot dans le serveur que vous shouaitez.
-|
-| Et pour le code cree le fichier "code/.env"
+> Aller sur [discorde devloper](https://discord.com/developers/applications).
+>
+> Creat a new application.
+>
+> Le configurer comme vous le shouaite.
+>
+> allez dans "OAuth2 URL Generator",
+>
+> Activer "Presence Intent", "Server Members Intent" et "MESSAGE CONTENT INTENT".
+>
+> lui donner le role copier et coller le lien sur la barre de navigation, ajouter le bot dans le serveur que vous shouaitez.
+>
+> Et pour le code cree le fichier "code/.env"
 
 qui contiendra :
 
-| tokenBot = <**Le token de votre bot**>.
-|
-| puis le code ***Bot.py*** ajoutera les fonctionalité a votre bot.
+> tokenBot = <**Le token de votre bot**>.
+>
+> puis le code ***Bot.py*** ajoutera les fonctionalité a votre bot.
 
 Executer le code est votre bot aura les fonction qu'il y a dans ***Bot.py*** .
 
@@ -82,7 +82,7 @@ Je tiens remercie mes camarade qui m'ont aide pour ce projet donc Merci
 
 - **prenom** pour **en quoi cette personne ma aide.**
 - [kvroooo](https://github.com/kvroooo) pour la pdp de mon BOT.
-- [Pepito](https://github.com/PepitoMercurio) et Kwency pour les explications / aide sur les configuration a faire pour le bot discorde,
+- [Pepito](https://github.com/PepitoMercurio) et [Kwency](https://github.com/kwency) pour les explications / aide sur les configuration a faire pour le bot discorde,
 et le code.
 - Et à ce qui me soutienne :heart:.
 
