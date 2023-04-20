@@ -17,3 +17,16 @@ et sur le discodre.
 et quelque petit modification du code.
 
 ---
+
+## 2
+
+---
+
+20/04/2023 :
+Je me pose des questions sur comment implementer un historique.
+Car si je dois faire ajouter une ligne de code pour chaque fonction c'est pas inteligement code.
+Et dans mon cahier des charger je dois stockée les historique de commande dans l'une structure de
+ces structure -> une liste chainée, une pile ou une file.
+
+Ma solution -> Crée une structure puis dans message verifier si c'est une commande et qu'elle exite
+puis on ajoute.
