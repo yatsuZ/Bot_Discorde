@@ -1,4 +1,4 @@
-from list_trier import Node
+from All_structure.list_trier import Node
 
 class Queue :
     """
@@ -17,7 +17,7 @@ class Queue :
         current = self.first_push
         while current.next:
             current = current.next
-        self.size =+1
+        self.size = self.size + 1
         current.next = N
 
     def pop(self):
@@ -31,7 +31,7 @@ class Queue :
         N = self.first_push
         self.first_push = N.next
         N.next = None
-        self.size =- 1
+        self.size = self.size - 1
         return (N)
 
     def size(self):
@@ -51,18 +51,20 @@ class Queue :
             print("NULL")
             return ()
         print(N.pop().data)
-N = Queue(10)
-N.push(1)
-N.push(-2)
-N.push(4)
-N.push(43)
-N.push(2)
-N.print_del()
-N.print_del()
-N.print_del()
-N.print_del()
-N.print_del()
-N.print_del()
-N.print_del()
-N.print_del()
-N.print_del()
+
+#### Test
+# N = Queue(10)
+# N.push(1)
+# N.push(-2)
+# N.push(4)
+# N.push(43)
+# N.push(2)
+# N.print_del()
+# N.print_del()
+# N.print_del()
+# N.print_del()
+# N.print_del()
+# N.print_del()
+# N.print_del()
+# N.print_del()
+# N.print_del()
