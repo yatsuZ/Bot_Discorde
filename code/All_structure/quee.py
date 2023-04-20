@@ -50,7 +50,7 @@ class Queue :
         if (self.first_push == None):
             print("NULL")
             return ()
-        print(N.pop().data)
+        print(self.pop().data)
 
 #### Test
 # N = Queue(10)
