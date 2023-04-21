@@ -13,9 +13,7 @@ from dotenv import load_dotenv
 
 from All_structure.pile import Pile
 
-Historique_commande = Pile(10)
-Historique_commande.print_last_POP()
-Historique_commande.print_last_POP()
+Historique_commande = Pile()
 
 mon_id = 284082499649273856
 mes_channel = [1067463854054965338 #underworld -> KK yassine
@@ -65,6 +63,21 @@ async def delete(ctx):
     async for message in ctx.channel.history(limit=10):
         await message.delete()
     ## Faire un code qui affiche un gif de kingkrimson.
+
+@yassbot.command(name="historique")
+async def show_Historique(ctx):
+    '''
+    Affiche les 10 derniere commande.
+    '''
+    i = 0
+    contenu = Historique_commande.pop()
+    if contenu == None:
+        await ctx.send("Plus de commande dans l'historique.")
+    while (i<10 and contenu):
+        await ctx.send(str(i)+" -> " + contenu.data.content)
+        contenu = Historique_commande.pop()
+        i = i + 1
+        
 
 ## EVENT :
 
@@ -127,9 +140,12 @@ async def on_message(message):
         command = yassbot.get_command(command_name)
         if command:
             await message.channel.send(f"La commande '{command_name}' existe.")
+            if command_name != "historique":
+                Historique_commande.push(message)
             await yassbot.process_commands(message)# Executera la commande du message.
         else:
             await message.channel.send(f"La commande '{command_name}' n'existe pas.") 
+
 
 #######
 
