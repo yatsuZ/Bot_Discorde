@@ -1,7 +1,7 @@
 # Installer :
 # pip install discord.py (pour utilise le yassbot discorde)
 # pip install nest_asyncio (pour insyncronisé)
-# pip install nest_asyncio (pour utilise import les fichier .env)
+# pip install python-dotenv (pour utilise import les fichier .env)
 # documentation du yassbot discorde: https://discordpy.readthedocs.io/en/stable/
 
 import nest_asyncio
