@@ -47,11 +47,16 @@ J'expliquerais step by step comment crée son propre BOT.
 >
 > Le configurer comme vous le shouaite.
 >
-> allez dans "OAuth2 URL Generator",
+> allez dans l'onglet ***BOT***,
 >
-> Activer "Presence Intent", "Server Members Intent" et "MESSAGE CONTENT INTENT".
+> Personellement j'ai tout activer sauf "REQUIRES OAUTH2 CODE GRANT" mais cochée décochée en fonction de vos besoin.
 >
-> lui donner le role copier et coller le lien sur la barre de navigation, ajouter le bot dans le serveur que vous shouaitez.
+> Puis allez dans l'onglet ***OAuth2*** >> ***URL GeneratorT***,
+> Nous créeons un bot donc cochons **BOT** dans **SCOPES**
+> puis metre le bon **BOT PERMISSIONS**.
+>
+> Apres sa copier l'URL generer et la metre sur une barre de navigation et choisir dans quelle serveur discorde
+> Implementer votre BOT.
 >
 > Et pour le code cree le fichier "code/.env"
 
