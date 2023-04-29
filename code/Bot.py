@@ -11,14 +11,12 @@ import asyncio
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from All_structure.pile import Pile
+from All_structure.Node_historique import NodeH, PileH
+from All_structure.Serveur import List_Serveur, Serveur_Discorde
 
-Historique_commande = Pile()
+All_Serveurs = List_Serveur()
 
 mon_id = 284082499649273856
-mes_channel = [1067463854054965338 #underworld -> KK yassine
-               , 417775845231427604#La teub -> Bureau pdg
-               ]
 
 # Permet d'activer le mode asynchrone dans un environnement synchrone.
 nest_asyncio.apply()
@@ -64,58 +62,44 @@ async def delete(ctx):
         await message.delete()
     ## Faire un code qui affiche un gif de kingkrimson.
 
-@yassbot.command(name="historique")
-async def show_Historique(ctx):
-    '''
-    Affiche les 10 derniere commande.
-    '''
-    i = 0
-    contenu = Historique_commande.pop()
-    if contenu == None:
-        await ctx.send("Plus de commande dans l'historique.")
-    while (i<10 and contenu):
-        await ctx.send(str(i)+" -> " + contenu.data.content)
-        contenu = Historique_commande.pop()
-        i = i + 1
-        
 
 ## EVENT :
 
-@yassbot.event
-async def on_ready():
-    '''
-    Des que le yassbot sera demarée affichera un message dans le serveur.
-    et un autre dans l'un de mes serveurs discordes.
-    '''
-    print("Le yassbot est prêt !")
-    yatsu = yassbot.get_user(mon_id) # Obtenir un objet utilisateur en utilisant son ID (c moi)
-    for id_channel in mes_channel:
-        channel = yassbot.get_channel(id_channel)
-        await channel.send("Salut je suis Réveillé :) ."+yatsu.mention+
-                           "\nJe suis en deploiment yassine essaie de faire des testes sur moi.")
+# @yassbot.event
+# async def on_ready():
+#     '''
+#     Des que le yassbot sera demarée affichera un message dans le serveur.
+#     et un autre dans l'un de mes serveurs discordes.
+#     '''
+#     print("Le yassbot est prêt !")
+#     yatsu = yassbot.get_user(mon_id) # Obtenir un objet utilisateur en utilisant son ID (c moi)
+#     for id_channel in mes_channel:
+#         channel = yassbot.get_channel(id_channel)
+#         await channel.send("Salut je suis Réveillé :) ."+yatsu.mention+
+#                            "\nJe suis en deploiment yassine essaie de faire des testes sur moi.")
 
-@yassbot.event
-async def on_typing(channel, user, when):
-    '''
-    Quand quelqun est en train decrire et mets plus de 10 seconde.
-    Mentione le fais qu'il mets du temp.
-    '''
-    async for message in channel.history(limit=1): # Récupérer le dernier message du canal
-        last_message = message
-    await asyncio.sleep(10) # attend 10 seconde
-    async for message in channel.history(limit=1): # Récupérer le dernier message du canal
-        if last_message == message: # Vérifier si l'auteur est l'utilisateur en question
-            await channel.send("Oui " + user.name + " éclaire nous de ta sagesse.") 
+# @yassbot.event
+# async def on_typing(channel, user, when):
+#     '''
+#     Quand quelqun est en train decrire et mets plus de 10 seconde.
+#     Mentione le fais qu'il mets du temp.
+#     '''
+#     async for message in channel.history(limit=1): # Récupérer le dernier message du canal
+#         last_message = message
+#     await asyncio.sleep(10) # attend 10 seconde
+#     async for message in channel.history(limit=1): # Récupérer le dernier message du canal
+#         if last_message == message: # Vérifier si l'auteur est l'utilisateur en question
+#             await channel.send("Oui " + user.name + " éclaire nous de ta sagesse.") 
 
-@yassbot.event
-async def on_member_join(member):
-    '''
-    Quand quelqun est en train decrire
-    le yassbot le mentione.
-    '''
-    for id_channel in mes_channel:
-        channel = yassbot.get_channel(id_channel)
-        await channel.send("Bienvenue sur le serveur ! "+ member.name)
+# @yassbot.event
+# async def on_member_join(member):
+#     '''
+#     Quand quelqun est en train decrire
+#     le yassbot le mentione.
+#     '''
+#     for id_channel in mes_channel:
+#         channel = yassbot.get_channel(id_channel)
+#         await channel.send("Bienvenue sur le serveur ! "+ member.name)
 
 
 ## L'event le plus important sa sera comme mon main
@@ -123,12 +107,14 @@ async def on_member_join(member):
 async def on_message(message):
     '''
     L'event activera la fonction a chaque fois qu'un utilisateur.
-    Ecxepter Yassbot.'''
+    Ecxepter Yassbot.
+    '''
     if message.author == yassbot.user:
         return
-  
+    print(message.guild.id)
+    
     message.content = message.content.lower()
- 
+
     if message.content.startswith("hello"):
         await message.channel.send("Wesh ma guel.")
     if message.content == "ping":
@@ -136,12 +122,16 @@ async def on_message(message):
     
 
     if message.content[0] == "!":
+        if (All_Serveurs.serveur_existe(message.guild.id)):
+                await message.channel.send("Aie je ne connais pas encore ce serveur :(.\n\
+Fait la commande !help OU !ajout_serveur.\
+\nSi tu veux que je puisse ajouter le serveur : \""+message.guild.name+"\" \
+dans mon repertoire et que tu puisse m'utiliser.")
+                return
         command_name = message.content[1:].split()[0]
         command = yassbot.get_command(command_name)
         if command:
             await message.channel.send(f"La commande '{command_name}' existe.")
-            if command_name != "historique":
-                Historique_commande.push(message)
             await yassbot.process_commands(message)# Executera la commande du message.
         else:
             await message.channel.send(f"La commande '{command_name}' n'existe pas.") 

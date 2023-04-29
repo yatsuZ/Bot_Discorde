@@ -68,3 +68,14 @@ Sinon Surprime les derniers "int" si int est superieur aux nombre d'historique S
 TO DO:
     - Faire une UML simplifier sur comment sera gerer mes donnée USER et Historique.
     - Code les fonction.
+
+---
+
+## 4
+
+---
+
+24/04/2023 :
+
+J'ai fais mon UML qui ma beaucoup aider pour avoir une vision d'ensemble
+je compte Refaire une grosse partie de mon code.
