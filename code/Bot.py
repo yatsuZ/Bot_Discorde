@@ -1,9 +1,3 @@
-# Installer :
-# pip install discord.py (pour utilise le yassbot discorde)
-# pip install nest_asyncio (pour insyncronisé)
-# pip install python-dotenv (pour utilise import les fichier .env)
-# documentation du yassbot discorde: https://discordpy.readthedocs.io/en/stable/
-
 import nest_asyncio
 import discord
 import os
@@ -18,27 +12,18 @@ All_Serveurs = List_Serveur()
 
 mon_id = 284082499649273856
 
-# Permet d'activer le mode asynchrone dans un environnement synchrone.
 nest_asyncio.apply()
 
-## Recevoir tout les evenent possible.
 intents = discord.Intents.all()
 
-## Initialisation de mon yassbot
-# Pour faire un commande il faudra metre un ! au depart
-# et gere tout les events.
 yassbot = commands.Bot(command_prefix="!", intents = intents)
 
-#######
-
-## Les commandes sont des message commancent par un prefix "!"(defini plus tot)
-# Que les user pouront executer.
-# qui executera une fonction.
-#####
-## Les Events sont des evenements -_- je ne peux pas mieux expliquer ahah et du coup
-# dans mon code cela executera  
-
-### Command :
+Explication_commande = [
+    "!aide:\n\t-Affiche le repertoire des commandes.",
+    "!wsh :\n\t-Le bot vous salura en vous mentionant et mentionara son createur.\n",
+    "!king_krimson:\n\t-les 10 derniers message serons suprimer + doit afficher un gif de king_krimson.\n\t(JOJO REF TU CONNAIS.)",
+    "!ajout_serveur:\n\t-La premier commande a faire tant que cette comande n'est pas faite je n'interagirai pas avec ce serveur.\n\tC'est pour que vous ajouter \"manuellement\" ce serveur dans ma base de donnée."
+                        ]
 
 @yassbot.command(name="wsh")
 @commands.guild_only()
@@ -60,46 +45,6 @@ async def delete(ctx):
     '''
     async for message in ctx.channel.history(limit=10):
         await message.delete()
-    ## Faire un code qui affiche un gif de kingkrimson.
-
-
-## EVENT :
-
-# @yassbot.event
-# async def on_ready():
-#     '''
-#     Des que le yassbot sera demarée affichera un message dans le serveur.
-#     et un autre dans l'un de mes serveurs discordes.
-#     '''
-#     print("Le yassbot est prêt !")
-#     yatsu = yassbot.get_user(mon_id) # Obtenir un objet utilisateur en utilisant son ID (c moi)
-#     for id_channel in mes_channel:
-#         channel = yassbot.get_channel(id_channel)
-#         await channel.send("Salut je suis Réveillé :) ."+yatsu.mention+
-#                            "\nJe suis en deploiment yassine essaie de faire des testes sur moi.")
-
-# @yassbot.event
-# async def on_typing(channel, user, when):
-#     '''
-#     Quand quelqun est en train decrire et mets plus de 10 seconde.
-#     Mentione le fais qu'il mets du temp.
-#     '''
-#     async for message in channel.history(limit=1): # Récupérer le dernier message du canal
-#         last_message = message
-#     await asyncio.sleep(10) # attend 10 seconde
-#     async for message in channel.history(limit=1): # Récupérer le dernier message du canal
-#         if last_message == message: # Vérifier si l'auteur est l'utilisateur en question
-#             await channel.send("Oui " + user.name + " éclaire nous de ta sagesse.") 
-
-# @yassbot.event
-# async def on_member_join(member):
-#     '''
-#     Quand quelqun est en train decrire
-#     le yassbot le mentione.
-#     '''
-#     for id_channel in mes_channel:
-#         channel = yassbot.get_channel(id_channel)
-#         await channel.send("Bienvenue sur le serveur ! "+ member.name)
 
 @yassbot.command(name="ajout_serveur")
 @commands.guild_only()
@@ -115,16 +60,42 @@ async def ajout_serveur(ctx):
     else:
         await ctx.send("J'ai deja ajouter le serveur : \""+ctx.guild.name+"\". Dans mes donnée à présent tu peut utilise mes commande fais\n!help si tu veux voir ce que je peux faire.")
 
+
+
+message_aide = "Salut sur quoi a tu besoin d'aide ? Appuye sur quoi a besoin tu d'aide \n\t-📄 : Je liste toute mes commande.\n\t-ℹ️: Je me presente\n\t-❌: Si tu n'as plus besoin d'aide.\n\nSeul l'auteur de ce message peux choisir. Si l'auteur du message ne choisi rien apres plus de 20 seconde\nou apres avoir choisi ce message s'auto detruira"
+
+@yassbot.event
+async def on_reaction_add(reaction, user):
+    historique = All_Serveurs.get_serveur(user.guild.id).historique
+    auteur_id: discord.message.Message = historique.get_lastNode().get_data()
+    print(auteur_id.author.name)
+    if user.id == auteur_id.author.id and reaction.message.content == message_aide:
+        if reaction.emoji == "📄" or reaction.emoji == "ℹ️" or reaction.emoji == "❌":
+            await reaction.message.delete()
+
 @yassbot.command(name="aide")
 @commands.guild_only()
 async def aide(ctx):
     '''
     Affiche un message d'aide sur le serveur.
     '''
-    await ctx.send("Je dois afficher un message qui explique qui suis je comme bot. et mes commande mais vu que je ne suis pas fini bah jecris rien :).")
+    message = await ctx.send(message_aide)
+    await message.add_reaction("📄")
+    await message.add_reaction("ℹ️")
+    await message.add_reaction("❌")
 
 
-## L'event le plus important sa sera comme mon main
+@yassbot.command(name="derniere_commande")
+@commands.guild_only()
+async def derniere_commande(ctx):
+    '''
+    Affiche la derniere commande avec les information.
+    '''
+    historique_du_serveur = All_Serveurs.get_serveur(ctx.guild.id).historique
+    dernier_message = historique_du_serveur.get_lastNode().get_data()
+    await ctx.send("message = "+ dernier_message.content)
+
+
 @yassbot.event
 async def on_message(message):
     '''
@@ -133,14 +104,18 @@ async def on_message(message):
     '''
     if message.author == yassbot.user:
         return
+
     serveur = All_Serveurs.get_serveur(message.guild.id)
-    if (message.content == "!ajout_serveur"):
-        await yassbot.process_commands(message)
-        All_Serveurs.get_serveur(message.guild.id).historique.push(message)
-        return
-    elif (message.content[0] == "!" and All_Serveurs.serveur_existe(message.guild.id)):
-            await message.channel.send("Aie je ne connais pas encore ce serveur :(.\nFait la commande !ajout_serveur.\nSi tu veux que je puisse ajouter le serveur : \""+message.guild.name+"\" dans mon repertoire et que tu puisse m'utiliser.")
-            return
+    if (serveur == None):
+        All_Serveurs.add_serveur(message.guild.id)
+        serveur = All_Serveurs.get_serveur(message.guild.id)
+    # if (message.content == "!ajout_serveur"):
+    #     await yassbot.process_commands(message)
+    #     All_Serveurs.get_serveur(message.guild.id).historique.push(message)
+    #     return
+    # elif (message.content[0] == "!" and serveur == None):
+    #         await message.channel.send("Aie je ne connais pas encore ce serveur :(.\nFait la commande !ajout_serveur.\nSi tu veux que je puisse ajouter le serveur : \""+message.guild.name+"\" dans mon repertoire et que tu puisse m'utiliser.")
+    #         return
 
     message.content = message.content.lower()
 
@@ -154,13 +129,8 @@ async def on_message(message):
         command_name = message.content[1:].split()[0]
         command = yassbot.get_command(command_name)
         if command:
-            # await message.channel.send(f"La commande '{command_name}' existe.")
+            serveur.historique.push(message)
             await yassbot.process_commands(message)# Executera la commande du message.
-        # else:
-        #     await message.channel.send(f"La commande '{command_name}' n'existe pas.") 
-
-
-#######
 
 load_dotenv()
 TOKENBOT = os.getenv('tokenBot')  # récupérer la valeur de votre token
