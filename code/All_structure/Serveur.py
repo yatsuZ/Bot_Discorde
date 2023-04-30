@@ -1,10 +1,12 @@
 from All_structure.Node_historique import NodeH
+from All_structure.Node_historique import PileH
 
 class Serveur_Discorde:
     def __init__(self, id_serveur):
         self.id_serveur = id_serveur
         self.list_id_chanelle = None
         self.list_id_user = None
+        self.historique = PileH()
     
     def add_user(self, user_id):
         """
@@ -84,3 +86,13 @@ class List_Serveur:
             if (current.get_data().id_serveur == serveur_id): return 0
             current = current.next
         return (1)
+
+    def get_serveur(self, serveur_id):
+        """
+        return l'objet serveur par raport a l'id.
+        """
+        current = self.list_serveur
+        while (current != None):
+            if (current.get_data().id_serveur == serveur_id): return current.get_data()
+            current = current.next
+        return (None)

@@ -101,6 +101,28 @@ async def delete(ctx):
 #         channel = yassbot.get_channel(id_channel)
 #         await channel.send("Bienvenue sur le serveur ! "+ member.name)
 
+@yassbot.command(name="ajout_serveur")
+@commands.guild_only()
+async def ajout_serveur(ctx):
+    '''
+    Ajoue du serveur dans la liste de mon bot.
+    '''
+    user = ctx.author
+    if (All_Serveurs.serveur_existe(ctx.guild.id)):
+        await ctx.send(""+user.mention+" a ajouter le serveur "+ctx.guild.name+" dans les données de \""+yassbot.user.mention+"\".\nA present vous pouvez interagir avec moi dans ce serveur.")
+        All_Serveurs.add_serveur(ctx.guild.id)
+        return
+    else:
+        await ctx.send("J'ai deja ajouter le serveur : \""+ctx.guild.name+"\". Dans mes donnée à présent tu peut utilise mes commande fais\n!help si tu veux voir ce que je peux faire.")
+
+@yassbot.command(name="aide")
+@commands.guild_only()
+async def aide(ctx):
+    '''
+    Affiche un message d'aide sur le serveur.
+    '''
+    await ctx.send("Je dois afficher un message qui explique qui suis je comme bot. et mes commande mais vu que je ne suis pas fini bah jecris rien :).")
+
 
 ## L'event le plus important sa sera comme mon main
 @yassbot.event
@@ -111,8 +133,15 @@ async def on_message(message):
     '''
     if message.author == yassbot.user:
         return
-    print(message.guild.id)
-    
+    serveur = All_Serveurs.get_serveur(message.guild.id)
+    if (message.content == "!ajout_serveur"):
+        await yassbot.process_commands(message)
+        All_Serveurs.get_serveur(message.guild.id).historique.push(message)
+        return
+    elif (message.content[0] == "!" and All_Serveurs.serveur_existe(message.guild.id)):
+            await message.channel.send("Aie je ne connais pas encore ce serveur :(.\nFait la commande !ajout_serveur.\nSi tu veux que je puisse ajouter le serveur : \""+message.guild.name+"\" dans mon repertoire et que tu puisse m'utiliser.")
+            return
+
     message.content = message.content.lower()
 
     if message.content.startswith("hello"):
@@ -122,19 +151,13 @@ async def on_message(message):
     
 
     if message.content[0] == "!":
-        if (All_Serveurs.serveur_existe(message.guild.id)):
-                await message.channel.send("Aie je ne connais pas encore ce serveur :(.\n\
-Fait la commande !help OU !ajout_serveur.\
-\nSi tu veux que je puisse ajouter le serveur : \""+message.guild.name+"\" \
-dans mon repertoire et que tu puisse m'utiliser.")
-                return
         command_name = message.content[1:].split()[0]
         command = yassbot.get_command(command_name)
         if command:
-            await message.channel.send(f"La commande '{command_name}' existe.")
+            # await message.channel.send(f"La commande '{command_name}' existe.")
             await yassbot.process_commands(message)# Executera la commande du message.
-        else:
-            await message.channel.send(f"La commande '{command_name}' n'existe pas.") 
+        # else:
+        #     await message.channel.send(f"La commande '{command_name}' n'existe pas.") 
 
 
 #######
