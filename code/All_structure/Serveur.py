@@ -58,6 +58,7 @@ class Serveur_Discorde:
 
     def get_all_user_id(self): return self.list_id_user
     def get_all_chanelle_id(self): return self.list_id_chanelle
+    def get_historique(self): return self.historique
 
 class List_Serveur:
     def __init__(self):
@@ -96,3 +97,20 @@ class List_Serveur:
             if (current.get_data().id_serveur == serveur_id): return current.get_data()
             current = current.next
         return (None)
+
+    def get_history_of_serv(self, serveur_id:int):
+        """
+        Return la pile historique du serveur
+        """
+        tmp = self.get_serveur(serveur_id)
+        if (tmp == None):
+            return None
+        return tmp.get_historique()
+    def get_last_data(self, serveur_id:int):
+        """
+        Return la derniere datacdu serveur
+        """
+        tmp = self.get_history_of_serv(serveur_id)
+        if (tmp == None):
+            return None
+        return tmp.get_lastNode().get_data()
