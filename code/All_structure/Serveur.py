@@ -114,3 +114,14 @@ class List_Serveur:
         if (tmp == None):
             return None
         return tmp.get_lastNode().get_data()
+    def get_last_previous_data(self, serveur_id:int):
+        """
+        Return l'avant dernier message'
+        """
+        tmp = self.get_history_of_serv(serveur_id)
+        if (tmp == None):
+            return None
+        tmp = tmp.get_lastNode().next
+        if (tmp == None):
+            return None
+        return tmp.get_data()

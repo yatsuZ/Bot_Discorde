@@ -1,7 +1,7 @@
 import nest_asyncio
+import asyncio
 import discord
 import os
-import asyncio
 import random
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -18,7 +18,7 @@ nest_asyncio.apply()
 intents = discord.Intents.all()
 
 yassbot = commands.Bot(command_prefix="!", intents = intents)
-
+###
 Makrdown = (
     "Voici un message de démonstration avec différentes utilisations de Markdown :"
     "\n**Texte en gras**"
@@ -48,8 +48,9 @@ async def show_all_markdown_discorde(ctx):
     '''
     Afficher out les effet de texte possible markdown sous discorde
     '''
+    print("Il doit se passer quelque chose")
+    await ctx.send("test")
     await ctx.send(Makrdown)
-
 
 @yassbot.command(name="wsh")
 @commands.guild_only()
@@ -162,15 +163,30 @@ async def aide(ctx):
 @commands.guild_only()
 async def derniere_commande(ctx):
     '''
-    Affiche la derniere commande avec les information.
+    Affiche la dernière commande avec les informations.
     '''
-    dernier_message : discord.Message = All_Serveurs.get_last_data()
+    dernier_message = All_Serveurs.get_last_previous_data(ctx.guild.id)
+    if (dernier_message == None):
+        await ctx.send("Aucune commande n'as encore etais envoyer.")
+        return
     serveur = dernier_message.guild
-    channelle = dernier_message.channel
+    channel = dernier_message.channel
     author = dernier_message.author
-    quand = dernier_message.
-    contenue = dernier_message.content
-    await ctx.send("Voici les information de la dernierre commande :"+ dernier_message.content)
+    anne = dernier_message.created_at.strftime("%Y")
+    mois = dernier_message.created_at.strftime("%m")
+    jour = dernier_message.created_at.strftime("%d")
+    heur = dernier_message.created_at.strftime("%H")
+    minute = dernier_message.created_at.strftime("%M")
+    contenu = dernier_message.content
+    await ctx.send("Voici les informations de l'avant dernière commande...\nVus que la derniere comande c'est celle que vous venez de rentrez ... enfin bref voila:")
+    message = "```ansi\n"+\
+        "\n\t[0;37m Par                         : [0;35m" + str(author)+\
+        "\n\t[0;37m Contenu                     : [0;33m" + contenu +\
+        "\n\t[0;37m Dans le channelle           : \"[0;32m" + str(channel) +"[0;37m\""\
+        "\n\t[0;37m Dans le serveur             : \"[0;31m" + str(serveur) +"[0;37m\""\
+        "\n\t[0;37m Envoyer le [0;36m" + jour + "/"+ mois + "/" + anne + " à "+heur+"H"+minute+\
+        "```"
+    await ctx.send(message)
 
 
 @yassbot.event
@@ -202,7 +218,7 @@ async def on_message(message):
         if command:
             serveur.historique.push(message)
             await yassbot.process_commands(message)
-
+###
 load_dotenv()
 TOKENBOT = os.getenv('tokenBot')  # récupérer la valeur de votre token
 if (TOKENBOT):
