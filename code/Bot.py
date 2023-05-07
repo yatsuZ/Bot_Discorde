@@ -39,8 +39,6 @@ Explication_events = \
     "2. Permet d'interagir avec la commande `!aide`.\n```"
 
 A_Faire = "```ansi\n" + \
-    "- Ajouter des informations et des emojis à aide.\n" + \
-    "----\n" + \
     "- Créer une commande historique qui prendra des paramètres pour historique global ou personnel, et qui pourra aussi supprimer un message de l'historique. Faire en sorte qu'une seule personne à la fois puisse y avoir accès.\n" + \
     "----\n" + \
     "- Faire une conversation d'arbre binaire (pas trop compris, attends Abdel pour le faire).\n" + \
@@ -68,13 +66,14 @@ message_aide = "**Yo Yasbot va t'aider !!**\n" + \
     "\n-\t 🪄 : Je liste tous mes événements.```Si tu te demandes quelles interactions je peux avoir ?```" + \
     "\n-\t ⚒️ : Je liste ce que je pourrais faire.```Si tu te demandes ce qui est en construction ?```" + \
     "\n-\t ❌ : Si tu n'as plus besoin d'aide,```(Le message ne se supprimera pas).```" + \
+    "\n-\t 🗑️ : Tu as fini de lire le message d'aide.```Si tu shouaite surpimer le message d'aide.```" + \
     "\n\n***Seul l'auteur de ce message peut choisir et interagir avec ce message***.\n"+\
-    "||Apres ***"+str(timer)+"*** secondes ce message se GOGOGADGET-autodétruira :detective:.||"
-emojie_aide = ["ℹ️", "📄", "🪄", "⚒️", "❌"]
+    "||Apres ***"+str(timer)+"*** secondes ce message se GOGOGADGET-autodétruira :detective:.\n"+\
+    "Toi actuellement :||\nhttps://thumbs.gfycat.com/TepidCloudyArmadillo-max-1mb.gif"
+emojie_aide = ["ℹ️", "📄", "🪄", "⚒️", "❌", "🗑️"]
 
 async def affichage_aide(reaction:discord.reaction.Reaction, id_autheur, message:discord.message.Message):
     if reaction.emoji == "❌":
-        await reaction.message.channel.send("La ❌ a etais selectioner donc")
         return
     try:
         msg = await message.channel.fetch_message(message.id)
@@ -83,21 +82,25 @@ async def affichage_aide(reaction:discord.reaction.Reaction, id_autheur, message
     supr = True
     for reac in reaction.message.reactions:
         if reac.emoji == "❌":
-             async for user in reaction.users():
+             async for user in reac.users():
                  if user.id == id_autheur:
                      supr = False
                      break
-    if (supr):
-        await reaction.message.delete()
     if (reaction.emoji == "📄"):
         await reaction.message.channel.send("Voici toute les commande d'ont je dispose :\n\n"+Explication_commande)
     elif (reaction.emoji == "ℹ️"):
         Presentation_Yassbot: str = "Salut, je suis " + str(yassbot.user.mention) + " créé par Yassine / yatsu.\nJe suis créé à des fins pédagogiques et j'espère que Yassine m'améliorera dans le futur et ne m'oubliera pas ;-;.\nSi tu souhaites voir l'avancement du projet ou des idées de choses que je peux faire, je te conseille de jeter un coup d'œil ici ;) : https://github.com/yatsuZ/Bot_Discorde"
         await reaction.message.channel.send(Presentation_Yassbot)
     elif reaction.emoji == "🪄":
-        await reaction.message.channel.send("Voici tous les ÉVÉNEMENTS qui sont actifs sur le bot :\n\n" + "\n".join(Explication_events))
+        await reaction.message.channel.send("Voici tous les ÉVÉNEMENTS qui sont actifs sur le bot :\n\n" + "\n"+Explication_events)
     elif reaction.emoji == "⚒️":
         await reaction.message.channel.send("Voici tout ce qu'il me reste à faire :\n\n" + A_Faire)
+    elif reaction.emoji == "🗑️":
+        if (supr == False):
+            await reaction.message.channel.send("ECOUTE MOI BIEN FDP TU ME DEMANDE DE FAIRE 2 TRUC CONTRAIDCTOIRE TU VEUX JE TE GOUMME ???.\nOUUUU????\n||Je rigole biens sur desolée davoir etais vulgaire ou offensent c'est une vanne tkt <3.\nDécoche ❌ et 🗑️ puis coche 🗑️.||")
+            await reaction.message.channel.send("https://media.giphy.com/media/2Yd8KeTXLDt8Yb8yg2/giphy.gif")
+            return
+        await reaction.message.delete()
 
 
 @yassbot.command(name="aide")
@@ -120,10 +123,11 @@ async def aide(ctx):
         if reaction.emoji == "❌":
             async for user in reaction.users():
                 if user.id == auteur_id:
-                    await ctx.send("Le message d'aide ne sera pas suprimer.")
+                    await ctx.send("Fin du compte à rebour. l'auteur est activer ❌ le message d'aide ne sera pas suprimer. Sauf si vous apuyer sur 🗑️.")
                     return
             break
     await message.delete()
+    await reaction.message.channel.send("https://hellogiggles.com/wp-content/uploads/sites/7/2016/07/10/giphy31.gif")
 
 
 ###################################################################################### texte Markdown + Commande Markdown
@@ -215,7 +219,7 @@ async def on_reaction_add(reaction:discord.reaction.Reaction, user:discord.membe
     if (last_message != None):
         auteur_id = last_message.get_data()
         if user.id == auteur_id.author.id and reaction.message.content == message_aide and reaction.message.author.id == yassbot.user.id:
-            await affichage_aide(reaction, auteur_id.author.id, reaction.message)
+            await affichage_aide(reaction, user.id, reaction.message)
 
 ###################################################################################### Commande derniere _commande
 
