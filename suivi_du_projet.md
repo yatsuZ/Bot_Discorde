@@ -79,3 +79,14 @@ TO DO:
 
 J'ai fais mon UML qui ma beaucoup aider pour avoir une vision d'ensemble
 je compte Refaire une grosse partie de mon code.
+
+## 5
+
+pOUR L'HISTORIQUE generale fais comment derniere commande mais ajoute flehce haut pour remonter ou decemendre si il shouaite naviguer normalement.
+OU
+metre un parametre au depart
+@user pour avoir uniquement l'historique d'un user precis
+M pour personne
+G pour generale
+au dautre critère comme un chanelle.
+Seulement 1 user peut l'utiliser à la fois.

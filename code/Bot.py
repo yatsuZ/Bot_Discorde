@@ -23,12 +23,20 @@ intents = discord.Intents.all()
 yassbot = commands.Bot(command_prefix="!", intents = intents)
 
 ###################################################################################### Texte + Comande Aide
-Explication_commande = \
-    "> **!aide**:\n>\t- Affiche le répertoire des commandes.\n\n"+\
-    "> **!markdown**:\n>\t- Affiche tous les effets de texte qu'on peut faire sur Discord (liste non exhaustive).\n"+\
-    "> **!wsh**:\n>\t- Le bot vous saluera en vous mentionnant et mentionnera son créateur.\n\n"+\
-    "> **!king_krimson**:\n>\t- Les 10 derniers messages seront supprimés et il affichera un gif de King Crimson.\n>\t(JOJO REF TU CONNAIS.)\n\n"+\
-    "> **!derniere_commande**:\n>\t- Affiche les informations suivantes : l'auteur, le contenu et la date de la dernière commande envoyée dans le serveur, ainsi que le nom du canal.\n"
+Explication_commande = (
+    "> **!aide**:\n>\t- Affiche le répertoire des commandes.\n\n"
+    "> **!markdown**:\n>\t- Affiche tous les effets de texte qu'on peut faire sur Discord (liste non exhaustive).\n"
+    "> **!wsh**:\n>\t- Le bot vous saluera en vous mentionnant et mentionnera son créateur.\n\n"
+    "> **!king_krimson**:\n>\t- Les 10 derniers messages seront supprimés et il affichera un gif de King Crimson.\n>\t(JOJO REF TU CONNAIS.)\n\n"
+    "> **!derniere_commande**:\n>\t- Affiche les informations suivantes : l'auteur, le contenu et la date de la dernière commande envoyée dans le serveur, ainsi que le nom du canal.\n\n"
+    "> **!history** ***Param***:"
+    "\n>\t- Cette commande permet de consulter l'historique des commandes précédentes et offre la possibilité de naviguer dans cet historique. Par exemple, vous pouvez voir l'avant-dernière commande ou la dernière commande. De plus, vous pouvez également supprimer une commande de l'historique. Si un utilisateur est inactif pendant 10 secondes ou s'il supprime une commande, la commande en cours sera terminée et un autre utilisateur pourra l'utiliser. La commande prend également un paramètre :"
+    "\n``` -Si le paramètre est vide, l'historique général du serveur sera affiché."
+    "\n- Si le paramètre est \"S\", \"Me\" ou \"moi\", l'historique de l'auteur (votre propre historique) sera affiché."
+    "\n- Si le paramètre est une mention d'un membre du serveur, l'historique de cet utilisateur sera affiché."
+    "\n- Si le paramètre est un canal du serveur, l'historique de ce canal sera affiché.```"
+    "\n> `Notez que les paramètres peuvent être combinés. De plus, seul un utilisateur peut utiliser la commande à la fois, car l'utilisateur qui l'exécute a la possibilité de supprimer des commandes de l'historique. Si plusieurs utilisateurs souhaitent utiliser la commande simultanément, une liste d'attente sera mise en place, et chaque utilisateur sera mentionné lorsqu'il pourra utiliser la commande.`"
+)
 
 Explication_events = \
     "> **on_message**:\n>\t- Quand quelqu'un envoie un message. ***L'ÉVÉNEMENT LE PLUS IMPORTANT.*** Cela permet de savoir si quelqu'un a envoyé une commande.\n>\tRéagit si quelqu'un envoie :\n"+\
@@ -223,26 +231,18 @@ async def on_reaction_add(reaction:discord.reaction.Reaction, user:discord.membe
 
 ###################################################################################### Commande derniere _commande
 
-@yassbot.command(name="derniere_commande")
-@commands.guild_only()
-async def derniere_commande(ctx):
-    '''
-    Affiche la dernière commande avec les informations.
-    '''
-    dernier_message = All_Serveurs.get_last_previous_data(ctx.guild.id)
-    if (dernier_message == None):
-        await ctx.send("Aucune commande n'as encore etais envoyer.")
-        return
-    serveur = dernier_message.guild
-    channel = dernier_message.channel
-    author = dernier_message.author
-    anne = dernier_message.created_at.strftime("%Y")
-    mois = dernier_message.created_at.strftime("%m")
-    jour = dernier_message.created_at.strftime("%d")
-    heur = dernier_message.created_at.strftime("%H")
-    minute = dernier_message.created_at.strftime("%M")
-    contenu = dernier_message.content
-    await ctx.send("Voici les informations de l'avant dernière commande...\nVus que la derniere comande c'est celle que vous venez de rentrez ... enfin bref voila:")
+def get_hisotiry_commande_data(message : discord.Message) -> str :
+    if (message == None):
+        return ("Aucune commande n'as encore etais envoyer.")
+    serveur = message.guild
+    channel = message.channel
+    author = message.author
+    anne = message.created_at.strftime("%Y")
+    mois = message.created_at.strftime("%m")
+    jour = message.created_at.strftime("%d")
+    heur = message.created_at.strftime("%H")
+    minute = message.created_at.strftime("%M")
+    contenu = message.content
     message = "```ansi\n"+\
         "\n\t[0;37m Par                         : [0;35m" + str(author)+\
         "\n\t[0;37m Contenu                     : [0;33m" + contenu +\
@@ -250,7 +250,81 @@ async def derniere_commande(ctx):
         "\n\t[0;37m Dans le serveur             : \"[0;31m" + str(serveur) +"[0;37m\""\
         "\n\t[0;37m Envoyer le [0;36m" + jour + "/"+ mois + "/" + anne + " à "+heur+"H"+minute+\
         "```"
-    await ctx.send(message)
+    return message
+
+@yassbot.command(name="derniere_commande")
+@commands.guild_only()
+async def derniere_commande(ctx):
+    '''
+    Affiche la dernière commande avec les informations.
+    '''
+    dernier_message = All_Serveurs.get_last_previous_data(ctx.guild.id)
+    message = get_hisotiry_commande_data(dernier_message)
+    if (dernier_message == None):
+        await ctx.send(message)
+        return
+    await ctx.send("Voici les informations de l'avant dernière commande...\nVus que la derniere comande c'est celle que vous venez de rentrez ... enfin bref voila:"+message)
+
+###################################################################################### COMMAND HISTORY
+
+@yassbot.command(name="history")
+@commands.guild_only()
+async def History(ctx, *args):
+    '''
+        Fait la commande History
+    '''
+    print(type(ctx))
+    print(args)
+    List_role = []
+    List_user = []
+    List_channelle = []
+    Argument_non_valide = ""
+    await ctx.send("Pas encore fini, je dois afficher l'historique et tu seras capable de naviguer avec ces émojis ➡️⬅️🗑️🏁")
+    if len(args) == 0:
+        print("Pas d'argument")
+        await ctx.send("Tu n'as pas mis de parametre donc tu auras l'historique de tout les commandes du serveur "+ ctx.guild.name +", du channelle " + ctx.channel.name + " de tout les utilisateurs.")
+    else:
+        for arg in args:
+            if arg.startswith('<@&') and arg.endswith('>'):  # Vérifie si c'est une mention de rôle
+                role_id = int(arg[3:-1])
+                role : discord.role.Role = discord.utils.get(ctx.guild.roles, id=role_id)
+                if role:
+                    List_role.append(role)
+            elif arg.startswith('<@') and arg.endswith('>'):  # Vérifie si c'est une mention utilisateur
+                user_id = int(arg[2:-1])
+                user : discord.user.User = discord.utils.get(ctx.guild.members, id=user_id)
+                if user:
+                    List_user.append(user)
+            elif arg.startswith('<#') and arg.endswith('>'):  # Vérifie si c'est une mention de canal
+                channel_id = int(arg[2:-1])
+                channel : discord.channel.TextChannel = discord.utils.get(ctx.guild.channels, id=channel_id)
+                if channel:
+                    List_channelle.append(channel)
+            else:
+                if (Argument_non_valide == ""):
+                    Argument_non_valide = arg
+                else :
+                    Argument_non_valide = Argument_non_valide + ", " + arg
+
+        # Convertir les listes en chaînes de caractères
+        print(List_role)
+        if (len(List_role) == 0):
+            str_list_role = "Aucun role."
+        else:
+            str_list_role = ", ".join([str(role.name) for role in List_role])
+        if (len(List_user) == 0):
+            str_list_user = "Tout les users"
+        else :
+            str_list_user = ", ".join([str(user.name) for user in List_user])
+        if (len(List_channelle) == 0):
+            str_list_channel = "en absence de parametre sa sera sur le channelle present " + ctx.channel.name
+        else:
+            str_list_channel = ", ".join([str(channel.name) for channel in List_channelle])
+        if (Argument_non_valide == ""):
+            Argument_non_valide = "GG tu as mis 0 argument non valide."
+
+        # Envoyer les listes converties en chaînes de caractères
+        await ctx.send("Voici les paramètres que tu as mis. `Tu auras l'historique des commande qui auront tout sa comme parametre` \nListe d'utilisateurs :\n\t" + str_list_user + "\nListe de rôles :\n\t" + str_list_role + "\nListe de canaux :\n\t" + str_list_channel + "\nMais frero sa c'est pas des arguments valide tu voulais faire quoi :\n\t" + Argument_non_valide)
 
 ###################################################################################### EVENT Message
 
