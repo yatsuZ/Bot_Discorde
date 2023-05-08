@@ -1,3 +1,5 @@
+import discord
+
 class NodeH:
     """
     Les noeuds contenant les donnée
@@ -14,6 +16,20 @@ class PileH:
     def __init__(self):
         self.size = 0
         self.last_Node = None
+
+    def check_unique(self, data):
+        index = self.last_Node
+        while index :
+            if index.data == data :
+                return False
+            index = index.next
+        return True
+
+    def push_No_double(self, data):
+        if (self.check_unique(data)):
+            self.push(data)
+            return True
+        return False
 
     def push(self, data):
         new_node = NodeH(data)
@@ -36,3 +52,28 @@ class PileH:
 
     def get_size(self): return self.size
     def get_lastNode(self): return self.last_Node
+    def pop(self):
+        if (self.last_Node == None):
+            return
+        last_node = self.last_Node()
+        self.del_last_node()
+        return last_node
+    def get_message(self, Param_U = None, Param_C = None, Param_R = None):
+        """
+        Retourne le dernier noeud en ayant les parametre valide.
+        """
+
+        resu = self.get_lastNode()
+        if (Param_U == None and Param_C == None and Param_R == None):
+            return resu
+        while (resu != None):
+            message : discord.Message = resu.get_data()
+            channel_message : discord.TextChannel = message.channel
+            auteur_message : discord.User = message.author
+            member = message.guild.get_member(auteur_message.id)
+            if (Param_C is None or channel_message in Param_C) and \
+               (Param_U is None or auteur_message in Param_U) and \
+               (Param_R is None or any(role in member.roles for role in Param_R)):
+                return resu
+            resu = resu.next
+        return (None)

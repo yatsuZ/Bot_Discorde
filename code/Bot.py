@@ -78,7 +78,10 @@ message_aide = "**Yo Yasbot va t'aider !!**\n" + \
     "\n\n***Seul l'auteur de ce message peut choisir et interagir avec ce message***.\n"+\
     "||Apres ***"+str(timer)+"*** secondes ce message se GOGOGADGET-autodétruira :detective:.\n"+\
     "Toi actuellement :||\nhttps://thumbs.gfycat.com/TepidCloudyArmadillo-max-1mb.gif"
+
 emojie_aide = ["ℹ️", "📄", "🪄", "⚒️", "❌", "🗑️"]
+
+emojie_History = ["➡️", "⬅️", "🗑️", "🏁"]
 
 async def affichage_aide(reaction:discord.reaction.Reaction, id_autheur, message:discord.message.Message):
     if reaction.emoji == "❌":
@@ -273,16 +276,16 @@ async def History(ctx, *args):
     '''
         Fait la commande History
     '''
-    print(type(ctx))
-    print(args)
     List_role = []
     List_user = []
     List_channelle = []
     Argument_non_valide = ""
-    await ctx.send("Pas encore fini, je dois afficher l'historique et tu seras capable de naviguer avec ces émojis ➡️⬅️🗑️🏁")
+    await ctx.send("Legende navigation history```➡️ : Message précedent.\n⬅️ : Message suivant\n🗑️ : Suprimer cette commande de l'historiqque\n🏁: en avoir fini avec la commande```")
     if len(args) == 0:
+        List_role = None
+        List_user = None
+        List_channelle = None
         print("Pas d'argument")
-        await ctx.send("Tu n'as pas mis de parametre donc tu auras l'historique de tout les commandes du serveur "+ ctx.guild.name +", du channelle " + ctx.channel.name + " de tout les utilisateurs.")
     else:
         for arg in args:
             if arg.startswith('<@&') and arg.endswith('>'):  # Vérifie si c'est une mention de rôle
@@ -307,16 +310,18 @@ async def History(ctx, *args):
                     Argument_non_valide = Argument_non_valide + ", " + arg
 
         # Convertir les listes en chaînes de caractères
-        print(List_role)
         if (len(List_role) == 0):
+            List_role = None
             str_list_role = "Aucun role."
         else:
             str_list_role = ", ".join([str(role.name) for role in List_role])
         if (len(List_user) == 0):
+            List_user = None
             str_list_user = "Tout les users"
         else :
             str_list_user = ", ".join([str(user.name) for user in List_user])
         if (len(List_channelle) == 0):
+            List_channelle = None
             str_list_channel = "en absence de parametre sa sera sur le channelle present " + ctx.channel.name
         else:
             str_list_channel = ", ".join([str(channel.name) for channel in List_channelle])
@@ -324,7 +329,9 @@ async def History(ctx, *args):
             Argument_non_valide = "GG tu as mis 0 argument non valide."
 
         # Envoyer les listes converties en chaînes de caractères
-        await ctx.send("Voici les paramètres que tu as mis. `Tu auras l'historique des commande qui auront tout sa comme parametre` \nListe d'utilisateurs :\n\t" + str_list_user + "\nListe de rôles :\n\t" + str_list_role + "\nListe de canaux :\n\t" + str_list_channel + "\nMais frero sa c'est pas des arguments valide tu voulais faire quoi :\n\t" + Argument_non_valide)
+        # await ctx.send("Voici les paramètres que tu as mis. `Tu auras l'historique des commande qui auront tout sa comme parametre` \nListe d'utilisateurs :\n\t" + str_list_user + "\nListe de rôles :\n\t" + str_list_role + "\nListe de canaux :\n\t" + str_list_channel + "\nMais frero sa c'est pas des arguments valide tu voulais faire quoi :\n\t" + Argument_non_valide)
+    print(List_user == None, List_user, List_channelle, List_role)
+    await All_Serveurs.Commande_History_init(ctx.guild.id, ctx.author, ctx.channel, List_user, List_channelle, List_role)## Fera tout seul l'affichage
 
 ###################################################################################### EVENT Message
 
