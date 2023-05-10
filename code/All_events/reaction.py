@@ -58,6 +58,7 @@ def add_event_reaction(yassbot: commands.Bot, List_serveur: List_Serveur, Descri
             all_reponse_bot = All_Serveurs.get_serveur(user.guild.id).historique_reponse_BOT
             if user.id == auteur_id.author.id and not (all_reponse_bot.check_unique(reaction.message)) and reaction.message.author.id == yassbot.user.id:
                 await affichage_aide(yassbot, reaction, user.id, reaction.message, description_com, description_eve)
+        # tOUTES LES INFO SONT DANS ALL_SERVEUR COMMANDE HISTORIE ;)
 
 async def affichage_aide(yassbot : commands.Bot, reaction:discord.reaction.Reaction, id_autheur, message:discord.message.Message, desc_commande : str, desc_events : str):
     if reaction.emoji == "❌":

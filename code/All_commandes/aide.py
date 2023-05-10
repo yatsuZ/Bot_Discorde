@@ -34,9 +34,9 @@ def add_commande_aide(yassbot : commands.Bot, timer : int, List_serveur : List_S
         messgae_auteur: discord.Message = All_Serveurs.get_last_data(ctx.guild.id)
         auteur_id = messgae_auteur.author.id
         message: discord.Message = await ctx.send(message_aide + "||Apres ***"+str(timer)+"*** secondes ce message se GOGOGADGET-autodétruira :detective:.\n"+"Toi actuellement :||\nhttps://thumbs.gfycat.com/TepidCloudyArmadillo-max-1mb.gif")
+        All_Serveurs.get_serveur(ctx.guild.id).historique_reponse_BOT.push_No_double(message)
         for emojie in emojie_aide:
             await message.add_reaction(emojie)
-        All_Serveurs.get_serveur(ctx.guild.id).historique_reponse_BOT.push_No_double(message)
         await asyncio.sleep(timer)
         try:
             msg = await ctx.channel.fetch_message(message.id)
