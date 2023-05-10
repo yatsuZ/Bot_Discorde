@@ -111,7 +111,7 @@ class Commande_History:
                 await channelle.send("https://tenor.com/view/stare-angry-mad-black-snake-moan-samuel-l-jackson-gif-17424729")
             else:
                 await channelle.send("Salut " + author.mention + " Malheureusement la commande `history` est en cours d'utilisation par " + self.Celui_qui_utilise_la_commande.name + ".\nJe vais t'ajouter dans une liste d'attente, d'accord ? Quand il aura fini, je mentionnerai tout ceux qui sont sur la liste d'attente et ce sera le premier qui exécutera la commande qui pourra reprendre le relais.")
-                print(author.name + " est ajouté dans la liste d'attente.")
+                # print(author.name + " est ajouté dans la liste d'attente.")
             return
         self.Actif = True
         self.Activer_dans_le_chanelle = channelle

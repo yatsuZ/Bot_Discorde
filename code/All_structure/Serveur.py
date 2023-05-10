@@ -10,6 +10,7 @@ class Serveur_Discorde:
         self.list_id_chanelle = None
         self.list_id_user = None
         self.historique = PileH()
+        self.historique_reponse_BOT = PileH()
         self.Commande_Historique = Commande_History()
     
     async def commande_History_init(self, auhtor : discord.User, chanelle : discord.TextChannel, params):
@@ -17,7 +18,7 @@ class Serveur_Discorde:
         Methode qui va activer l'objet commande_historique
         Et ne return rien la methode affiche tout seul dans le serveur
         """
-        print("activation de l'initialisation de commande historie.")
+        # print("activation de l'initialisation de commande historie.")
         await self.Commande_Historique.Activation_de_la_commande(auhtor, chanelle, self.get_historique(), params[0], params[1], params[2])
         
     def add_user(self, user_id):

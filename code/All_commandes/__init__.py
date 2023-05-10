@@ -1,0 +1,7 @@
+from All_commandes.wesh import add_commande_wesh
+from All_commandes.markdown import add_commande_markdown
+from All_commandes.aide import add_commande_aide
+from All_commandes.king_krimson import add_commande_KING_KRIMSON
+from All_commandes.derniere_commande import add_commande_derniere_commande
+from All_commandes.history import add_commande_history
+from All_commandes.all_commandes import add_all_commandes
