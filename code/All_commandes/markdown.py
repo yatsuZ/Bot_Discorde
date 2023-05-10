@@ -25,9 +25,10 @@ Makrdown = (
     "\n~~Texte Barée~~"
     "\nLien : https://github.com/yatsuZ"
 )
-def add_commande_markdown(yassbot : commands.Bot):
+def add_commande_markdown(yassbot : commands.Bot) -> str:
     """
-    Le yassbot aura la commande markdown
+    Le yassbot aura la commande markdown.
+    return la description de la commande
     """
     @yassbot.command(name="markdown")
     @commands.guild_only()
@@ -38,3 +39,6 @@ def add_commande_markdown(yassbot : commands.Bot):
         print("Il doit se passer quelque chose")
         await ctx.send("test")
         await ctx.send(Makrdown)
+    return Desciption
+
+Desciption = "\n> **!markdown**:\n>\t- Affiche tous les effets de texte qu'on peut faire sur Discord (liste non exhaustive).\n"

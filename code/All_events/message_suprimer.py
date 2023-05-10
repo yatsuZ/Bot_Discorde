@@ -16,3 +16,9 @@ def add_event_message_suprimer(yassbot : commands.Bot):
         # pass
         print("Un message a été supprimé.")
         # print(f"Contenu du message : {message.content}")
+    
+    return Description
+
+Description = (
+    "\n> **on_message_delete**:\n>\t- Quand un message est supprimé. \"**Un message a été supprimé.**\" sera affiché dans le serveur de YassBot."
+)

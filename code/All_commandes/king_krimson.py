@@ -4,7 +4,7 @@ from discord.ext import commands
 
 ###################################################################################### Commande King Krimson
 
-def add_commande_KING_KRIMSON(yassbot : commands.Bot):
+def add_commande_KING_KRIMSON(yassbot : commands.Bot) -> str:
     """
     Le yassbot aura la commande king_krimson
     """
@@ -26,3 +26,7 @@ def add_commande_KING_KRIMSON(yassbot : commands.Bot):
             gif_king_krimson = "https://media.tenor.com/vUdvSJpdQq8AAAAd/king-crimson.gif"
         await ctx.send("`Lorsque le Stand arrête d'effacer le temps, les victimes ne se souviennent plus de ce qui s'est passé.`\n")
         await ctx.send(gif_king_krimson)
+
+    return Description
+
+Description = "\n> **!king_krimson**:\n>\t- Les 10 derniers messages seront supprimés et il affichera un gif de King Crimson.\n>\t(JOJO REF TU CONNAIS.)\n"

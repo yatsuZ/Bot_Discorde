@@ -43,3 +43,10 @@ def add_event_on_message(yassbot : commands.Bot, List_serveur : List_Serveur):
             if command:
                 serveur.historique.push(message)
                 await yassbot.process_commands(message)
+
+    return Description
+
+Description = (
+    "\n> **on_message**:\n>\t- Quand quelqu'un envoie un message. ***L'ÉVÉNEMENT LE PLUS IMPORTANT.*** Cela permet de savoir si quelqu'un a envoyé une commande.\n>\tRéagit si quelqu'un envoie :\n"
+    "\n```python\nQui commence par : \"hello ...\".\nExactement : \"ping\", \"quoicoubaka\"\n```"
+)

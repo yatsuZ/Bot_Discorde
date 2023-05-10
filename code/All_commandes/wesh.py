@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 ###################################################################################### Commande wsh
 
-def add_commande_wesh(yassbot : commands.Bot, mon_id : int):
+def add_commande_wesh(yassbot : commands.Bot, mon_id : int) -> str:
     """
     Le yassbot aura la commande wesh
     """
@@ -20,3 +20,7 @@ def add_commande_wesh(yassbot : commands.Bot, mon_id : int):
         user = ctx.author
         yatsu = yassbot.get_user(mon_id) # Obtenir un objet utilisateur en utilisant son ID (c moi)
         await ctx.send("Wsh "+user.mention+".\nJe suis un yassbot pas encore fini fait par "+ yatsu.mention +".")
+    
+    return Description
+
+Description = "\n> **!wsh**:\n>\t- Le bot vous saluera en vous mentionnant et mentionnera son créateur.\n"

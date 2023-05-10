@@ -25,13 +25,17 @@ yassbot = commands.Bot(command_prefix="!", intents = intents)
 
 timer = 30
 
-###################################################################################### Ajoue des events
+Description_Commandes = ""
 
-All_events.add_all_events(yassbot, mon_id, All_Serveurs)
+Description_Events = ""
 
 ###################################################################################### Ajoue des commandes
 
-All_commandes.add_all_commandes(yassbot, mon_id, timer, All_Serveurs)
+Description_Commandes = All_commandes.add_all_commandes(yassbot, mon_id, timer, All_Serveurs, Description_Commandes)
+
+###################################################################################### Ajoue des events
+
+All_events.add_all_events(yassbot, mon_id, All_Serveurs, Description_Commandes, Description_Events)
 
 ###################################################################################### ACTVIER LE BOT
 

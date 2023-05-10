@@ -74,3 +74,14 @@ def add_commande_history(yassbot : commands.Bot, List_serv : List_Serveur):
             # Envoyer les listes converties en chaînes de caractères
             # await ctx.send("Voici les paramètres que tu as mis. `Tu auras l'historique des commande qui auront tout sa comme parametre` \nListe d'utilisateurs :\n\t" + str_list_user + "\nListe de rôles :\n\t" + str_list_role + "\nListe de canaux :\n\t" + str_list_channel + "\nMais frero sa c'est pas des arguments valide tu voulais faire quoi :\n\t" + Argument_non_valide)
         await All_Serveurs.Commande_History_init(ctx.guild.id, ctx.author, ctx.channel, List_user, List_channelle, List_role)## Fera tout seul l'affichage
+    return Desription
+
+Desription = (
+    "\n> **!history** ***Param***:"
+    "\n>\t- Cette commande permet de consulter l'historique des commandes précédentes et offre la possibilité de naviguer dans cet historique. Par exemple, vous pouvez voir l'avant-dernière commande ou la dernière commande. De plus, vous pouvez également supprimer une commande de l'historique. Si un utilisateur est inactif pendant 10 secondes ou s'il supprime une commande, la commande en cours sera terminée et un autre utilisateur pourra l'utiliser. La commande prend également un paramètre :"
+    "\n``` -Si le paramètre est vide, l'historique général du serveur sera affiché."
+    "\n- Si le paramètre est \"S\", \"Me\" ou \"moi\", l'historique de l'auteur (votre propre historique) sera affiché."
+    "\n- Si le paramètre est une mention d'un membre du serveur, l'historique de cet utilisateur sera affiché."
+    "\n- Si le paramètre est un canal du serveur, l'historique de ce canal sera affiché.```"
+    "\n> `Notez que les paramètres peuvent être combinés. De plus, seul un utilisateur peut utiliser la commande à la fois, car l'utilisateur qui l'exécute a la possibilité de supprimer des commandes de l'historique. Si plusieurs utilisateurs souhaitent utiliser la commande simultanément, une liste d'attente sera mise en place, et chaque utilisateur sera mentionné lorsqu'il pourra utiliser la commande.`"
+)

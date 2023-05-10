@@ -4,7 +4,7 @@ from discord.ext import commands
 from All_structure import List_Serveur
 
 ###################################################################################### Commande derniere _commande
-def add_commande_derniere_commande(yassbot : commands.Bot, List_serveur : List_Serveur):
+def add_commande_derniere_commande(yassbot : commands.Bot, List_serveur : List_Serveur) -> str:
     """
     Le yassbot aura la commande derniere_commande
     """
@@ -23,6 +23,8 @@ def add_commande_derniere_commande(yassbot : commands.Bot, List_serveur : List_S
             await ctx.send(message)
             return
         await ctx.send("Voici les informations de l'avant dernière commande...\nVus que la derniere comande c'est celle que vous venez de rentrez ... enfin bref voila:"+message)
+
+    return Description
 
 def get_hisotiry_commande_data(message : discord.Message) -> str :
     if (message == None):
@@ -44,3 +46,5 @@ def get_hisotiry_commande_data(message : discord.Message) -> str :
         "\n\t[0;37m Envoyer le [0;36m" + jour + "/"+ mois + "/" + anne + " à "+heur+"H"+minute+\
         "```"
     return message
+
+Description = "\n> **!derniere_commande**:\n>\t- Affiche les informations suivantes : l'auteur, le contenu et la date de la dernière commande envoyée dans le serveur, ainsi que le nom du canal.\n"
