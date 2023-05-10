@@ -77,15 +77,34 @@ async def affichage_aide(yassbot : commands.Bot, reaction:discord.reaction.React
     if (reaction.emoji == "📄"):
         await reaction.message.channel.send(desc_commande)
     elif (reaction.emoji == "ℹ️"):
-        Presentation_Yassbot: str = "Salut, je suis " + str(yassbot.user.mention) + ", créé par Yassine / yatsu.\nJe suis conçu à des fins pédagogiques et j'espère que Yassine continuera à m'améliorer à l'avenir et ne m'oubliera pas ;-;.\nSi tu souhaites suivre l'avancement du projet ou proposer des idées pour m'améliorer, je te conseille de jeter un coup d'œil ici ;) : https://github.com/yatsuZ/Bot_Discorde"
-        await reaction.message.channel.send(Presentation_Yassbot)
+        Presentation_Yassbot_1 = f"""
+```md
+# Présentation du bot Yassbot
+```
+Salut, je suis {yassbot.user.mention}, créé par Yassine / yatsu. :wave:
+De base, j'ai été conçu à des fins pédagogiques, MAIS à présent, pas que. J'espère que Yassine continuera à m'améliorer à l'avenir et ne m'oubliera pas ;-;.
+En tout cas, il m'a créé avec passion. :sparkles::sparkles:
+"""
+        Presentation_Yassbot_2 = f"""
+Et n'oublie pas, {yassbot.user.mention} est là pour te divertir avec des délires goofy, kawaii, drôles, geek, etc. XD. Mon but est de te divertir et si tu as des besoins spécifiques, n'hésite pas à contacter Yassine :)
+
+Yassine doit sûrement être comme Yoshi, posé, en train d'explorer le monde en quête d'aventure et de méditer, OU NON, en train de charboner sur son PC, hahaha. Bref, voilà ! Chow ! N'hésite pas à refaire la commande `!aide` pour voir tout ce que je peux faire ou ce qui me reste à faire, etc.
+
+Si tu souhaites suivre l'avancement du projet, proposer des idées pour m'améliorer ou obtenir des conseils, je te conseille de jeter un coup d'œil ici :wink: (c'est le repo GitHub du projet) :
+https://github.com/yatsuZ/Bot_Discorde
+"""
+
+        await reaction.message.channel.send(Presentation_Yassbot_1)
+        await reaction.message.channel.send("https://tenor.com/view/yoshi-alone-music-gif-13828164")
+        await reaction.message.channel.send(Presentation_Yassbot_2)
+        await reaction.message.channel.send("```Le temps que tu lises tout le message d'aide, il a déjà dû s'autodétruire. RUPTURE !!```")
     elif reaction.emoji == "🪄":
         await reaction.message.channel.send(desc_events)
     elif reaction.emoji == "⚒️":
         await reaction.message.channel.send("Voici tout ce qu'il me reste à faire :\n\n" + A_Faire)
     elif reaction.emoji == "🗑️":
         if (supr == False):
-            await reaction.message.channel.send("ECOUTE-MOI BIEN FDP, TU ME DEMANDES DE FAIRE 2 TRUCS CONTRADICTOIRES ? TU VEUX QUE JE TE GOMME ???\nOUUUU ????" + "||Je rigole bien sûr, désolé d'avoir été vulgaire ou offensant, c'est une vanne, tkt <3.||\nDécoche ❌ et 🗑️ puis coche 🗑️.")
+            await reaction.message.channel.send("ECOUTE-MOI BIEN FDP, TU ME DEMANDES DE FAIRE 2 TRUCS CONTRADICTOIRES ? TU VEUX QUE JE TE GOMME ???\nOUUUU ????\n||Je rigole bien sûr, désolé d'avoir été vulgaire ou offensant, c'est une vanne, tkt <3.||\nDécoche ❌ et 🗑️ puis coche 🗑️.")
             await reaction.message.channel.send("https://media.giphy.com/media/2Yd8KeTXLDt8Yb8yg2/giphy.gif")
             return
         await reaction.message.delete()
