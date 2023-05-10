@@ -55,7 +55,7 @@ class PileH:
     def pop(self):
         if (self.last_Node == None):
             return
-        last_node = self.last_Node()
+        last_node = self.get_lastNode()
         self.del_last_node()
         return last_node
     def get_message(self, Param_U = None, Param_C = None, Param_R = None):
@@ -77,3 +77,24 @@ class PileH:
                 return resu
             resu = resu.next
         return (None)
+    
+    def del_this_node(self, node: NodeH):
+        current_node = self.get_lastNode()
+
+        while current_node is not None:
+            if current_node == node:
+                if current_node.previous is not None:
+                    current_node.previous.next = current_node.next
+
+                if current_node.next is not None:
+                    current_node.next.previous = current_node.previous
+
+                current_node.next = None
+                current_node.previous = None
+
+                print("Noeud supprimé.")
+                return
+
+            current_node = current_node.next
+
+        print("Noeud non trouvé dans la pile.")

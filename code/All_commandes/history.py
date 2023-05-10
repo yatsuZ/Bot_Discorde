@@ -7,6 +7,18 @@ from All_structure import List_Serveur
 
 ###################################################################################### COMMAND HISTORY
 
+Legende_commande = (
+    """
+    Légende de la navigation dans l'historique :
+    ```
+    ➡️ : Message le plus récent.
+    ⬅️ : Message le plus ancien.
+    🗑️ : Supprimer cette commande de l'historique.
+    🏁 : Terminer la commande.
+    ```
+    """
+)
+
 def add_commande_history(yassbot : commands.Bot, List_serv : List_Serveur):
     """
     Le yassbot aura la commande history
@@ -24,7 +36,7 @@ def add_commande_history(yassbot : commands.Bot, List_serv : List_Serveur):
         List_user = []
         List_channelle = []
         Argument_non_valide = ""
-        await ctx.send("Legende navigation history```➡️ : Message précedent.\n⬅️ : Message suivant\n🗑️ : Suprimer cette commande de l'historiqque\n🏁: en avoir fini avec la commande```")
+        await ctx.send(Legende_commande)
         if len(args) == 0:
             List_role = None
             List_user = None
@@ -74,6 +86,7 @@ def add_commande_history(yassbot : commands.Bot, List_serv : List_Serveur):
             # Envoyer les listes converties en chaînes de caractères
             # await ctx.send("Voici les paramètres que tu as mis. `Tu auras l'historique des commande qui auront tout sa comme parametre` \nListe d'utilisateurs :\n\t" + str_list_user + "\nListe de rôles :\n\t" + str_list_role + "\nListe de canaux :\n\t" + str_list_channel + "\nMais frero sa c'est pas des arguments valide tu voulais faire quoi :\n\t" + Argument_non_valide)
         await All_Serveurs.Commande_History_init(ctx.guild.id, ctx.author, ctx.channel, List_user, List_channelle, List_role)## Fera tout seul l'affichage
+
     return Desription
 
 Desription = (

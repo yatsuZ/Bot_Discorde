@@ -13,6 +13,9 @@ class Serveur_Discorde:
         self.historique_reponse_BOT = PileH()
         self.Commande_Historique = Commande_History()
     
+    async def inactif_commande_historique(self):
+        await self.Commande_Historique.inactif()
+
     async def commande_History_init(self, auhtor : discord.User, chanelle : discord.TextChannel, params):
         """
         Methode qui va activer l'objet commande_historique
@@ -149,3 +152,6 @@ class List_Serveur:
             return ("ERROR la guild id n'est pas dans ba bdd. ce ne devrais pas etre possible.")
         params = [List_user, List_channelle, List_role]
         await bon_serveur.commande_History_init(author, channelle, params)
+    
+    async def inactif_commande_historique(self, id_serv):
+        await self.get_serveur(id_serv).inactif_commande_historique()

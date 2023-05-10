@@ -8,17 +8,6 @@ from dotenv import load_dotenv
 
 emojie_History = ["➡️", "⬅️", "🗑️", "🏁"]
 
-# def get_hisotiry_commande_data(message : discord.Message) -> str :
-
-#     message = get_hisotiry_commande_data(dernier_message)
-#     if (dernier_message == None):
-#         await ctx.send(message)
-#         return
-#     else :
-#         ajout_emojie : discord.Message = await ctx.send(message)
-#         for emojie in emojie_History:
-#             await ajout_emojie.add_reaction(emojie)
-
 class Commande_History:
     def __init__(self):
         """
@@ -41,6 +30,23 @@ class Commande_History:
         self.Param_R = None
         self.Dernier_message_envoyer : discord.Message = None
     
+    async def inactif(self):
+        """
+        Vérifier après un certain temps si le dernier message est toujours le même. Si c'est le cas, je libère la commande.
+        """
+        timer = 10
+        dernier_message = self.Dernier_message_envoyer
+        await asyncio.sleep(timer)
+        # try:
+        #     msg = await self.Activer_dans_le_chanelle.fetch_message(dernier_message.id)
+        # except discord.NotFound:
+        #     return
+        if dernier_message == self.Dernier_message_envoyer and self.Actif:
+            await self.Activer_dans_le_chanelle.send("Tu mets trop de temps à agir. Je suppose que tu as fini.")
+            await self.Fin_de_commande()
+            return
+        print("Il y a eu un changement.")
+
     def affichage_data(self, message : discord.Message) -> str :
         if (message == None):
             return ("")
@@ -68,15 +74,55 @@ class Commande_History:
         """
         return self.Historie_serveur.get_message(self.Param_U, self.Param_C, self.Param_R)
     
+    def get_next_node_message(self) -> NodeH:
+        """
+        Return le message suivant par raport à lindex ayant les parametre actif
+        """
+        resu = self.Index_message.next
+        if (resu == None): return None
+        if (self.Param_U == None and self.Param_C == None and self.Param_R == None):
+            return resu
+        while (resu != None):
+            message : discord.Message = resu.get_data()
+            channel_message : discord.TextChannel = message.channel
+            auteur_message : discord.User = message.author
+            member = message.guild.get_member(auteur_message.id)
+            if (self.Param_C is None or channel_message in self.Param_C) and \
+               (self.Param_U is None or auteur_message in self.Param_U) and \
+               (self.Param_R is None or any(role in member.roles for role in self.Param_R)):
+                return resu
+            resu = resu.next
+        return (None)
+
+    def get_previous_node_message(self) -> NodeH:
+        """
+        Return le message précedent par rapport à l'index ayant les parametre actif
+        """
+        resu = self.Index_message.previous
+        if (resu == None): return None
+        if (self.Param_U == None and self.Param_C == None and self.Param_R == None):
+            return resu
+        while (resu != None):
+            message : discord.Message = resu.get_data()
+            channel_message : discord.TextChannel = message.channel
+            auteur_message : discord.User = message.author
+            member = message.guild.get_member(auteur_message.id)
+            if (self.Param_C is None or channel_message in self.Param_C) and \
+               (self.Param_U is None or auteur_message in self.Param_U) and \
+               (self.Param_R is None or any(role in member.roles for role in self.Param_R)):
+                return resu
+            resu = resu.previous
+        return (None)
+
     async def Fin_de_commande(self):
         """
         Fin de commande remet tout a leur valeur initial
         et mentione tout ce qui son dans la liste d'attente que le user a fini.
         """
-        self.Historie_serveur=  None
+        # self.Historie_serveur=  None
         message_de_fin = self.Celui_qui_utilise_la_commande.mention + " a fini d'utilise la commande historie.\n"
         while self.List_dattente.size:
-            message_de_fin = message_de_fin + self.List_dattente.pop().mention + " "
+            message_de_fin = message_de_fin + self.List_dattente.pop().get_data().mention + " "
         message_de_fin = message_de_fin + "\nVous pouvez executer la commande !history, premier arriver premier servie ."
         self.Index_message : NodeH = None
         self.Actif : bool = False
@@ -89,13 +135,13 @@ class Commande_History:
         self.Param_R = None
         self.Dernier_message_envoyer : discord.Message = None
     
-    async def add_emojie(self):
+    async def add_emojie(self):# 1 corrige le fais que si le message n'est plus la ne peut pas envoyer les emojie
         """
         J'ajoute des emojie au dernier message envoyer en fonction de lindex
         """
-        if self.Index_message.next != None:
+        if self.get_next_node_message() != None:
             await self.Dernier_message_envoyer.add_reaction("⬅️")
-        if self.Index_message.previous != None:
+        if self.get_previous_node_message() != None:
             await self.Dernier_message_envoyer.add_reaction("➡️")
         await self.Dernier_message_envoyer.add_reaction("🗑️")
         await self.Dernier_message_envoyer.add_reaction("🏁")
@@ -118,10 +164,48 @@ class Commande_History:
         self.Celui_qui_utilise_la_commande = author
         self.Param_U, self.Param_C, self.Param_R = Param_U, Param_C, Param_R
         self.Historie_serveur = Historique_commande
-        self.Index_message = node_message = self.get_node_message()
-        if (node_message == None):
+        self.Index_message = self.get_node_message()
+        if (self.Index_message == None):
             await channelle.send("Et Bien aucune commande fus trouver :smiling_face_with_tear:.")
             await self.Fin_de_commande()
             return
-        self.Dernier_message_envoyer = await self.Activer_dans_le_chanelle.send(self.affichage_data(node_message.get_data()))
+        self.Dernier_message_envoyer = await self.Activer_dans_le_chanelle.send(self.affichage_data(self.Index_message.get_data()))
         await self.add_emojie()
+        await self.inactif()
+
+    async def del_this_command(self):# Ne marche pas 
+        """
+        Surpime de l'historque la commande
+        """
+        if (self.Index_message.previous is not None):
+            self.Index_message.previous.next = self.Index_message.next
+        if (self.Index_message.next is not None):
+            self.Index_message.next.previous = self.Index_message.previous
+        self.Index_message = None
+        await self.Fin_de_commande()
+    
+    async def deplacement(self):
+        try:
+            msg = await self.Activer_dans_le_chanelle.fetch_message(self.Dernier_message_envoyer.id)
+            await msg.delete()
+        except discord.NotFound:
+            pass
+        self.Dernier_message_envoyer = await self.Activer_dans_le_chanelle.send(self.affichage_data(self.Index_message.get_data()))
+        await self.add_emojie()
+        await self.inactif()
+
+    async def deplacer_passee(self):
+        """
+        doit recuperer le noeud NEXT et l'afficher et surpimer le message actuel
+        """
+        if (self.get_next_node_message() == None): print("ERROROROOROROR\n\n")
+        self.Index_message = self.get_next_node_message()
+        await self.deplacement()
+
+    async def deplacer_futur(self):
+        """
+        doit recuperer le noeud previous et l'afficher et surpimer le message actuel
+        """
+        if (self.get_previous_node_message() == None): print("ERROROROOROROR\n\n")
+        self.Index_message = self.get_previous_node_message()
+        await self.deplacement()
