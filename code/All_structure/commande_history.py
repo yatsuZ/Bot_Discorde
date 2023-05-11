@@ -119,7 +119,7 @@ class Commande_History:
         Fin de commande remet tout a leur valeur initial
         et mentione tout ce qui son dans la liste d'attente que le user a fini.
         """
-        # self.Historie_serveur=  None
+        self.Historie_serveur=  None
         message_de_fin = self.Celui_qui_utilise_la_commande.mention + " a fini d'utilise la commande historie.\n"
         while self.List_dattente.size:
             message_de_fin = message_de_fin + self.List_dattente.pop().get_data().mention + " "
@@ -135,16 +135,28 @@ class Commande_History:
         self.Param_R = None
         self.Dernier_message_envoyer : discord.Message = None
     
-    async def add_emojie(self):# 1 corrige le fais que si le message n'est plus la ne peut pas envoyer les emojie
+    async def add_emojie(self):
         """
-        J'ajoute des emojie au dernier message envoyer en fonction de lindex
+        J'ajoute des emojis au dernier message envoyé en fonction de l'index
         """
-        if self.get_next_node_message() != None:
-            await self.Dernier_message_envoyer.add_reaction("⬅️")
-        if self.get_previous_node_message() != None:
-            await self.Dernier_message_envoyer.add_reaction("➡️")
-        await self.Dernier_message_envoyer.add_reaction("🗑️")
-        await self.Dernier_message_envoyer.add_reaction("🏁")
+        if self.get_next_node_message() is not None:
+            try:
+                await self.Dernier_message_envoyer.add_reaction("⬅️")
+            except discord.NotFound:
+                return
+
+        if self.get_previous_node_message() is not None:
+            try:
+                await self.Dernier_message_envoyer.add_reaction("➡️")
+            except discord.NotFound:
+                return
+
+        try:
+            await self.Dernier_message_envoyer.add_reaction("🗑️")
+            await self.Dernier_message_envoyer.add_reaction("🏁")
+        except discord.NotFound:
+            return
+
 
 
     async def Activation_de_la_commande(self, author: discord.User, channelle: discord.TextChannel, Historique_commande: PileH, Param_U, Param_C, Param_R):
@@ -173,15 +185,23 @@ class Commande_History:
         await self.add_emojie()
         await self.inactif()
 
-    async def del_this_command(self):# Ne marche pas 
+    async def del_this_command(self, serv):# Ne marche pas 
         """
         Surpime de l'historque la commande
         """
-        if (self.Index_message.previous is not None):
-            self.Index_message.previous.next = self.Index_message.next
-        if (self.Index_message.next is not None):
-            self.Index_message.next.previous = self.Index_message.previous
-        self.Index_message = None
+        hitorique_serveur = serv.get_historique()
+        copy : NodeH = hitorique_serveur.get_lastNode()
+        while (copy != None and copy != self.Index_message): copy = copy.next
+        if (copy == None):
+            await self.Activer_dans_le_chanelle.send("Pas trouver dans l'historique de commande de base. ce la veut dire qu'il a deja etais surpimer.")
+        elif (copy.next is None and copy.previous is None) : hitorique_serveur.last_Node = None
+        elif (copy != None and copy.previous is not None):
+            print("X->avant->suivant = X-> suivant")
+            copy.previous.next = copy.next
+        elif (copy != None and copy.next is not None):
+            print("X->suivant->avant = X-> avant")
+            copy.next.previous = copy.previous
+        copy.get_data().content = "Je n'y arrive pas "
         await self.Fin_de_commande()
     
     async def deplacement(self):

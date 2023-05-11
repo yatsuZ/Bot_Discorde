@@ -4,6 +4,7 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 from All_structure import List_Serveur
+from All_structure import Serveur_Discorde
 from All_structure import Commande_History
 
 Explication_events = (
@@ -61,15 +62,15 @@ def add_event_reaction(yassbot: commands.Bot, List_serveur: List_Serveur, Descri
                 await affichage_aide(yassbot, reaction, user.id, reaction.message, description_com, description_eve)
         # tOUTES LES INFO SONT DANS ALL_SERVEUR COMMANDE HISTORIE ;)
         if reaction.message == All_Serveurs.get_serveur(user.guild.id).Commande_Historique.Dernier_message_envoyer and All_Serveurs.get_serveur(user.guild.id).Commande_Historique.Celui_qui_utilise_la_commande == user:
-            await reaction_history_command(reaction, user, All_Serveurs.get_serveur(user.guild.id).Commande_Historique)
+            await reaction_history_command(reaction, user, All_Serveurs.get_serveur(user.guild.id).Commande_Historique, All_Serveurs.get_serveur(user.guild.id))
 
-async def reaction_history_command(react : discord.reaction.Reaction, user : discord.User, command_history : Commande_History):
+async def reaction_history_command(react : discord.reaction.Reaction, user : discord.User, command_history : Commande_History, serveur : Serveur_Discorde ):
     """Fonction qui reagis quand on appuye sur une reaction"""
     print("Condition valide"+ react.emoji)
     if react.emoji == "🗑️":
         await react.message.channel.send("La poubelle a etais selectione. Je dois suprimer de l'historique.")
         await react.message.channel.send("https://tenor.com/view/now-delete-it-neuralyzer-will-smith-men-in-black-gif-16747951")
-        await command_history.del_this_command()
+        await command_history.del_this_command(serveur)
     elif react.emoji == "🏁":
         await react.message.channel.send("https://tenor.com/view/ford-mustang-checkered-flag-mustang-ford-muscle-cars-gif-24937288")
         await command_history.Fin_de_commande()
