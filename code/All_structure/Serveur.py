@@ -1,6 +1,7 @@
 from All_structure.Node_historique import NodeH
 from All_structure.Node_historique import PileH
 from All_structure.commande_history import Commande_History
+from All_structure.commande_aide import Commande_aide
 
 import discord
 
@@ -10,8 +11,8 @@ class Serveur_Discorde:
         self.list_id_chanelle = None
         self.list_id_user = None
         self.historique = PileH()
-        self.historique_reponse_BOT = PileH()
         self.Commande_Historique = Commande_History()
+        self.Commande_aide = Commande_aide()
     
     async def inactif_commande_historique(self):
         await self.Commande_Historique.inactif()

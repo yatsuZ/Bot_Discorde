@@ -15,8 +15,6 @@ Explication_events = (
 
 A_Faire = (
     "```ansi\n"
-    "- Correction de beug que j'ai remarquer.\n"
-    "----\n"
     "- Essayer de créer un système de devinette comme Akinator. Créer un Akinator par serveur. Les utilisateurs pourront le personnaliser au fur et à mesure.\n"
     "----\n"
     "- Faire la gestion de l'historique du serveur de liste avec des hashtable pour que ce soit plus rapide.\n"
@@ -52,13 +50,10 @@ def add_event_reaction(yassbot: commands.Bot, List_serveur: List_Serveur, Descri
         if str(reaction.emoji) == "👍": 
             if user.id == reaction.message.author.id:
                 await reaction.message.channel.send("L'utilisateur a réagi avec la réaction 👍 à son propre message. Quel idiot !")
-        last_message = All_Serveurs.get_serveur(serveur_id=user.guild.id).historique.get_lastNode()# Problème vulnairable car si !aide puis quelqun dautre fais une commande sa ne marchera pas à corriger
-        if (last_message != None):
-            auteur_id = last_message.get_data()
-            all_reponse_bot = All_Serveurs.get_serveur(user.guild.id).historique_reponse_BOT
-            if user.id == auteur_id.author.id and not (all_reponse_bot.check_unique(reaction.message)) and reaction.message.author.id == yassbot.user.id:
-                await affichage_aide(yassbot, reaction, user.id, reaction.message, description_com, description_eve)
-        # tOUTES LES INFO SONT DANS ALL_SERVEUR COMMANDE HISTORIE ;)
+        last_message = All_Serveurs.get_serveur(serveur_id=user.guild.id).Commande_aide.find_by_message(reaction.message)
+        # Cree une strucutre commande aide qui stocke un message reponse à un user 
+        if (last_message != None and user == last_message[1] and reaction.message == last_message[0]):
+            await affichage_aide(yassbot, reaction, user.id, reaction.message, description_com, description_eve, All_Serveurs.get_serveur(user.guild.id))
         if reaction.message == All_Serveurs.get_serveur(user.guild.id).Commande_Historique.Dernier_message_envoyer and All_Serveurs.get_serveur(user.guild.id).Commande_Historique.Celui_qui_utilise_la_commande == user:
             await reaction_history_command(reaction, user, All_Serveurs.get_serveur(user.guild.id).Commande_Historique, All_Serveurs.get_serveur(user.guild.id))
 
@@ -79,7 +74,7 @@ async def reaction_history_command(react : discord.reaction.Reaction, user : dis
     else:
         await react.message.channel.send("Alors frero toi tu veux jouer au plus malin.")
         await react.message.channel.send("https://tenor.com/view/drew-scanlon-white-guy-blinking-sunglasses-yeahhh-excuse-me-gif-12929296")
-async def affichage_aide(yassbot : commands.Bot, reaction:discord.reaction.Reaction, id_autheur, message:discord.message.Message, desc_commande : str, desc_events : str):
+async def affichage_aide(yassbot : commands.Bot, reaction:discord.reaction.Reaction, id_autheur, message:discord.message.Message, desc_commande : str, desc_events : str, serv : Serveur_Discorde):
     if reaction.emoji == "❌":
         return
     try:
@@ -126,4 +121,5 @@ https://github.com/yatsuZ/Bot_Discorde
             await reaction.message.channel.send("ECOUTE-MOI BIEN FDP, TU ME DEMANDES DE FAIRE 2 TRUCS CONTRADICTOIRES ? TU VEUX QUE JE TE GOMME ???\nOUUUU ????\n||Je rigole bien sûr, désolé d'avoir été vulgaire ou offensant, c'est une vanne, tkt <3.||\nDécoche ❌ et 🗑️ puis coche 🗑️.")
             await reaction.message.channel.send("https://media.giphy.com/media/2Yd8KeTXLDt8Yb8yg2/giphy.gif")
             return
+        serv.Commande_aide.del_message_user(reaction.message)
         await reaction.message.delete()

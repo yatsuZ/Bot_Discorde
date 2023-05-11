@@ -34,7 +34,7 @@ def add_commande_aide(yassbot : commands.Bot, timer : int, List_serveur : List_S
         messgae_auteur: discord.Message = All_Serveurs.get_last_data(ctx.guild.id)
         auteur_id = messgae_auteur.author.id
         message: discord.Message = await ctx.send(message_aide + "||Apres ***"+str(timer)+"*** secondes ce message se GOGOGADGET-autodétruira :detective:.\n"+"Toi actuellement :||\nhttps://thumbs.gfycat.com/TepidCloudyArmadillo-max-1mb.gif")
-        All_Serveurs.get_serveur(ctx.guild.id).historique_reponse_BOT.push_No_double(message)
+        All_Serveurs.get_serveur(ctx.guild.id).Commande_aide.add_message_user(message, ctx.author)
         for emojie in emojie_aide:
             await message.add_reaction(emojie)
         await asyncio.sleep(timer)
@@ -49,6 +49,7 @@ def add_commande_aide(yassbot : commands.Bot, timer : int, List_serveur : List_S
                         await ctx.send("Fin du compte à rebour. l'auteur est activer ❌ le message d'aide ne sera pas suprimer. Sauf si vous apuyer sur 🗑️.")
                         return
                 break
+        All_Serveurs.get_serveur(ctx.guild.id).Commande_aide.del_message_user(message)
         await message.delete()
         await reaction.message.channel.send("https://hellogiggles.com/wp-content/uploads/sites/7/2016/07/10/giphy31.gif")
     return Description
