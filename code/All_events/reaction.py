@@ -15,9 +15,7 @@ Explication_events = (
 
 A_Faire = (
     "```ansi\n"
-    "- Créer une commande historique qui prendra des paramètres pour l'historique global ou personnel, et qui pourra aussi supprimer un message de l'historique. Faire en sorte qu'une seule personne à la fois puisse y avoir accès.\n"
-    "----\n"
-    "- Faire une conversation d'arbre binaire (pas trop compris, attends Abdel pour le faire).\n"
+    "- Correction de beug que j'ai remarquer.\n"
     "----\n"
     "- Essayer de créer un système de devinette comme Akinator. Créer un Akinator par serveur. Les utilisateurs pourront le personnaliser au fur et à mesure.\n"
     "----\n"

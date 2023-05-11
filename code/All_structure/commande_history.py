@@ -37,15 +37,11 @@ class Commande_History:
         timer = 10
         dernier_message = self.Dernier_message_envoyer
         await asyncio.sleep(timer)
-        # try:
-        #     msg = await self.Activer_dans_le_chanelle.fetch_message(dernier_message.id)
-        # except discord.NotFound:
-        #     return
         if dernier_message == self.Dernier_message_envoyer and self.Actif:
             await self.Activer_dans_le_chanelle.send("Tu mets trop de temps à agir. Je suppose que tu as fini.")
             await self.Fin_de_commande()
             return
-        print("Il y a eu un changement.")
+        # print("Il y a eu un changement.")
 
     def affichage_data(self, message : discord.Message) -> str :
         if (message == None):
@@ -187,21 +183,18 @@ class Commande_History:
 
     async def del_this_command(self, serv):# Ne marche pas 
         """
-        Surpime de l'historque la commande
+        Surpime de l'historque la commande. je dois appeler un serveur car enfaite l'historique de commande de l'objet et du serveur ne sont pas relier.
         """
         hitorique_serveur = serv.get_historique()
         copy : NodeH = hitorique_serveur.get_lastNode()
         while (copy != None and copy != self.Index_message): copy = copy.next
         if (copy == None):
-            await self.Activer_dans_le_chanelle.send("Pas trouver dans l'historique de commande de base. ce la veut dire qu'il a deja etais surpimer.")
+            await self.Activer_dans_le_chanelle.send("Pas trouver dans l'historique de commande de base. Ce la veut dire qu'il a deja etais surpimer.")
         elif (copy.next is None and copy.previous is None) : hitorique_serveur.last_Node = None
         elif (copy != None and copy.previous is not None):
-            print("X->avant->suivant = X-> suivant")
             copy.previous.next = copy.next
         elif (copy != None and copy.next is not None):
-            print("X->suivant->avant = X-> avant")
             copy.next.previous = copy.previous
-        copy.get_data().content = "Je n'y arrive pas "
         await self.Fin_de_commande()
     
     async def deplacement(self):
@@ -218,7 +211,6 @@ class Commande_History:
         """
         doit recuperer le noeud NEXT et l'afficher et surpimer le message actuel
         """
-        if (self.get_next_node_message() == None): print("ERROROROOROROR\n\n")
         self.Index_message = self.get_next_node_message()
         await self.deplacement()
 
@@ -226,6 +218,5 @@ class Commande_History:
         """
         doit recuperer le noeud previous et l'afficher et surpimer le message actuel
         """
-        if (self.get_previous_node_message() == None): print("ERROROROOROROR\n\n")
         self.Index_message = self.get_previous_node_message()
         await self.deplacement()
