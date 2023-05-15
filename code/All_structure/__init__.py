@@ -8,4 +8,4 @@ from All_structure.Serveur import List_Serveur, Serveur_Discorde
 from All_structure.commande_history import Commande_History
 from All_structure.commande_aide import Commande_aide
 from All_structure.commande_devinette import Commande_devinette
-from All_structure.dico import DiscordServerHashTable
+from All_structure.dico import Dico

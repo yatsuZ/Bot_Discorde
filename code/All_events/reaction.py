@@ -56,6 +56,8 @@ def add_event_reaction(yassbot: commands.Bot, List_serveur: List_Serveur, Descri
             await affichage_aide(yassbot, reaction, user.id, reaction.message, description_com, description_eve, All_Serveurs.get_serveur(user.guild.id))
         if reaction.message == All_Serveurs.get_serveur(user.guild.id).Commande_Historique.Dernier_message_envoyer and All_Serveurs.get_serveur(user.guild.id).Commande_Historique.Celui_qui_utilise_la_commande == user:
             await reaction_history_command(reaction, user, All_Serveurs.get_serveur(user.guild.id).Commande_Historique, All_Serveurs.get_serveur(user.guild.id))
+        commande_devinette = All_Serveurs.get_serveur(user.guild.id).Commande_devinette
+        await commande_devinette.reaction(reaction, user)
 
 async def reaction_history_command(react : discord.reaction.Reaction, user : discord.User, command_history : Commande_History, serveur : Serveur_Discorde ):
     """Fonction qui reagis quand on appuye sur une reaction"""

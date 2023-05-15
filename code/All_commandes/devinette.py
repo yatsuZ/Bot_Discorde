@@ -18,17 +18,21 @@ def add_commande_devinette(yassbot : commands.Bot, Tout_les_serveurs : List_Serv
     """
 
     All_serv = Tout_les_serveurs
-    message_de_depart = "Salut tu comence le jeux de devinette\nX : Non\nV : OUI"
+    message_de_depart = "Salut tu commence le jeux de devinette\n❌ : Non\n✅ : OUI"
 
     @yassbot.command(name="devinette")
     @commands.guild_only()
-    async def say_hello(ctx):
+    async def devinette(ctx):
         '''
         initiliase le jeux de devinette
         '''
-        await ctx.send(message_de_depart)
-        await ctx.send("metre gif akinator")
         serveur : Serveur_Discorde = All_serv.get_serveur(ctx.guild.id)
+        if (serveur.Commande_devinette.message_user_index.get(ctx.author) != None):
+            await ctx.send("Salut "+ctx.author.mention+". Tu es deja en train de jouer aux devinette termine ta partie.")
+            return
+        await ctx.send(message_de_depart)
+        dernier_message = await ctx.send("https://tenor.com/view/aladdin-and-the-king-of-thieves-genie-raise-eyebrows-grin-smile-gif-15623514")
+        await serveur.Commande_devinette.start_commande(message=dernier_message, user=ctx.author)
     
     return Description
 

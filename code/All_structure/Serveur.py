@@ -3,7 +3,7 @@ from All_structure.Node_historique import PileH
 from All_structure.commande_history import Commande_History
 from All_structure.commande_aide import Commande_aide
 from All_structure.commande_devinette import Commande_devinette
-from All_structure.dico import DiscordServerHashTable
+from All_structure.dico import Dico
 import discord
 
 class Serveur_Discorde:
@@ -81,7 +81,7 @@ class Serveur_Discorde:
 
 class List_Serveur:
     def __init__(self):
-        self.list_serveur = DiscordServerHashTable()
+        self.list_serveur = Dico()
         self.size = 0
     
     def add_serveur(self, serveur_id):
