@@ -2,7 +2,8 @@ from All_structure.Node_historique import NodeH
 from All_structure.Node_historique import PileH
 from All_structure.commande_history import Commande_History
 from All_structure.commande_aide import Commande_aide
-
+from All_structure.commande_devinette import Commande_devinette
+from All_structure.dico import DiscordServerHashTable
 import discord
 
 class Serveur_Discorde:
@@ -13,6 +14,7 @@ class Serveur_Discorde:
         self.historique = PileH()
         self.Commande_Historique = Commande_History()
         self.Commande_aide = Commande_aide()
+        self.Commande_devinette = Commande_devinette()
     
     async def inactif_commande_historique(self):
         await self.Commande_Historique.inactif()
@@ -79,41 +81,29 @@ class Serveur_Discorde:
 
 class List_Serveur:
     def __init__(self):
-        self.list_serveur = None
+        self.list_serveur = DiscordServerHashTable()
         self.size = 0
     
     def add_serveur(self, serveur_id):
         """
         ajoute un nouveaux id user
         """
-        new_Serveur = NodeH(Serveur_Discorde(serveur_id))
-        if (self.list_serveur == None):
-            self.list_serveur = new_Serveur
-            return
-        self.list_serveur.previous = new_Serveur
-        new_Serveur.next = self.list_serveur
-        self.list_serveur = new_Serveur
+        self.list_serveur.append(serveur_id, Serveur_Discorde(serveur_id))
     
     def serveur_existe(self, serveur_id):
         """
         verifie que se serveur id est deja ma liste.
         0 si l'id est trouver
         """
-        current = self.list_serveur
-        while (current != None):
-            if (current.get_data().id_serveur == serveur_id): return 0
-            current = current.next
-        return (1)
+        return (self.list_serveur.get(serveur_id) == None)
 
     def get_serveur(self, serveur_id):
         """
         return l'objet serveur par raport a l'id.
         """
-        current = self.list_serveur
-        while (current != None):
-            if (current.get_data().id_serveur == serveur_id): return current.get_data()
-            current = current.next
-        return (None)
+        if (self.serveur_existe(serveur_id)): return None
+        res = self.list_serveur.get(serveur_id)
+        return (res[1])
 
     def get_history_of_serv(self, serveur_id:int):
         """

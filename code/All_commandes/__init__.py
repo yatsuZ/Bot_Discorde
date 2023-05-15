@@ -4,4 +4,5 @@ from All_commandes.aide import add_commande_aide
 from All_commandes.king_krimson import add_commande_KING_KRIMSON
 from All_commandes.derniere_commande import add_commande_derniere_commande
 from All_commandes.history import add_commande_history
+from All_commandes.devinette import add_commande_devinette
 from All_commandes.all_commandes import add_all_commandes

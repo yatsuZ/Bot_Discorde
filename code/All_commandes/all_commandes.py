@@ -19,6 +19,8 @@ def add_all_commandes(yassbot : commands.Bot, mon_id : int, timer : int, All_ser
 
     description_commandes = description_commandes + All_commandes.add_commande_derniere_commande(yassbot, All_serveurs)
 
+    description_commandes = description_commandes + All_commandes.add_commande_devinette(yassbot, All_serveurs)
+
     description_commandes = description_commandes + All_commandes.add_commande_history(yassbot, All_serveurs)
 
     return description_commandes
