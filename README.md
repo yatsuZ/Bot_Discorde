@@ -1,6 +1,6 @@
 # Bot_Discorde
 
-Creation d'un BOT discorde en python <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Robot.png" alt="Robot" width="25" height="25" />.
+Création d'un BOT Discord en Python <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Robot.png" alt="Robot" width="25" height="25" />.
 
 ## Description
 
@@ -10,86 +10,60 @@ Voici YassBot.
   <img src="img/Yasbot_PDP.jpg" alt="YassBot photo de profil" style="border-radius: 50%;">
 </p>
 
-Le petit nouveaux, YassBot = Yassine + Bot.
+Le petit nouveau, YassBot = Yassine + Bot.
 
-Mon Bot pourra dire bonjour<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Waving%20Hand.png" alt="Waving Hand" width="25" height="25" />.
+Mon Bot pourra faire certaine chose mais je vous laisse decouvrire ces commandes.
 
-Jouer à un petit jeux, ou on devra deviner un chiffre entre 1 et 100 🎲.
+Ce repo permet de publier mon travail et une démonstration de création d'un bot avec des fonctionnalités simples.
 
-Ce sont les seuls fonctionalité precise que je compte implementer pour l'instant.
-Mais jespere que bot poura gerer les images 🖼️, les videos 📺, le son 🎝, les reaction (les emojies en dessous des commentaire.) ✔️.
 
-Voici la liste exostive des fonctionale que mon bot pourras faire :
+## Étapes à suivre pour le créer vous-même
 
-| Commande           | Description                                                          |
-| ------------------ | -------------------------------------------------------------------- |
-| !wsh             | Le bot affichera: salut "nom de l'utilisateur".<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Waving%20Hand.png" alt="Waving Hand" width="25" height="25" />                      |
-| !History [X]       | Le bot montre les X dernier commande, avec une structure de pile. 📅   |
-| !Jouons            | Le bot proposera des petit jeux. 🎴                                      |
+1. Rendez-vous sur [Discord Developer Portal](https://discord.com/developers/applications).
+2. Créez une nouvelle application.
+3. Configurez-la selon vos souhaits.
+4. Accédez à l'onglet **BOT**.
+5. Personnellement, j'ai activé toutes les options sauf "REQUIRES OAUTH2 CODE GRANT". Cochez ou décochez en fonction de vos besoins.
+6. Ensuite, allez dans l'onglet **OAuth2** >> **URL Generator**.
+   - Nous créons un bot, donc cochez **BOT** dans la section **SCOPES**.
+   - Sélectionnez les permissions appropriées pour votre bot dans la section **BOT PERMISSIONS**.
+7. Copiez l'URL générée et collez-la dans la barre de navigation. Choisissez le serveur Discord où vous souhaitez implémenter votre bot.
+8. Pour le code, créez un fichier nommé "code/.env" contenant :
 
-Ce repo permet de publier mon travail et une demonstration de creation d'un bot avec des fonctionalité simple.
+```env
+tokenBot = <Le token de votre bot>
+```
 
-J'expliquerais step by step comment crée son propre BOT.
+9. Ensuite, le code dans ***Bot.py*** ajoutera les fonctionnalités à votre bot.
+10. Exécutez le code et votre bot aura les fonctionnalités présentes dans ***Bot.py***.
 
-## Démonstration Final
+## Avis
 
-**Rien j'ai pas fini.**
-
-## Comment avoir mon bot dans votre serveur
-
-**Rien j'ai pas fini.**
-
-## Etape a suivre pour le faire sois meme
-
-> Aller sur [discorde devloper](https://discord.com/developers/applications).
->
-> Creat a new application.
->
-> Le configurer comme vous le shouaite.
->
-> allez dans l'onglet ***BOT***,
->
-> Personellement j'ai tout activer sauf "REQUIRES OAUTH2 CODE GRANT" mais cochée décochée en fonction de vos besoin.
->
-> Puis allez dans l'onglet ***OAuth2*** >> ***URL GeneratorT***,
-> Nous créeons un bot donc cochons **BOT** dans **SCOPES**
-> puis metre le bon **BOT PERMISSIONS**.
->
-> Apres sa copier l'URL generer et la metre sur une barre de navigation et choisir dans quelle serveur discorde
-> Implementer votre BOT.
->
-> Et pour le code cree le fichier "code/.env"
-
-qui contiendra :
-
-> tokenBot = <**Le token de votre bot**>.
->
-> puis le code ***Bot.py*** ajoutera les fonctionalité a votre bot.
-
-Executer le code est votre bot aura les fonction qu'il y a dans ***Bot.py*** .
+Je ne suis pas trop satisfais du travaille rendu mais la documentation de discorde est tres inetressante et si je refais un bot je serais beaucoup plus
+préparée et efficace car j'ai mis du temp à trouver une bonne structure de code pour etre productife.
 
 ---
 
 ## Contribuer
 
-Si vous voulez maidez vous pouvez :
+Si vous souhaitez m'aider, vous pouvez :
 
-1. Metre une etoile si vous aimez mon projet et me soutenir 😊.
-2. Me signalez si il y a des cas d'erreur, de beug, d'orthographe et grammaire.
+1. Mettre une étoile si vous aimez mon projet et souhaitez me soutenir 😊.
+2. Me signaler s'il y a des erreurs, des bugs, des problèmes d'orthographe ou de grammaire.
 
-## Chose aprise
+## Choses apprises
 
-J'ai aris une partie de la doc de discorde pour les creation d'un bot
+J'ai appris une partie de la documentation de Discord pour la création d'un bot.
 
-## Remerciment
+## Remerciements
 
-Je tiens remercie mes camarade qui m'ont aide pour ce projet donc Merci
+Je tiens à remercier mes camarades qui m'ont aidé pour ce projet. Merci à :
 
-- **prenom** pour **en quoi cette personne ma aide.**
-- [kvroooo](https://github.com/kvroooo) pour la pdp de mon BOT.
-- [Pepito](https://github.com/PepitoMercurio) et [Kwency](https://github.com/kwency) pour les explications / aide sur les configuration a faire pour le bot discorde,
-et le code.
-- Et à ce qui me soutienne :heart:.
+- [kvroooo](https://github.com/kvroooo) pour la photo de profil de mon BOT.
+- [Pepito](https://github.com/PepitoMercurio) et [Kwency](https://github.com/kwency) pour les explications et l'aide concernant la configuration à faire pour le bot Discord, ainsi que pour le code.
+- Rémi pour m'avoir apporté un autre point de vue sur la façon de structurer le code.
+- Et à tous ceux qui me soutiennent ❤️.
+
 
 ## Auteur
 
