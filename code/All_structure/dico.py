@@ -3,6 +3,12 @@ class Dico:
         self.buckets = []
         self.size = 0
 
+    def sauvegarde(self):
+        tab = []
+        for data in self.buckets:
+            tab.append({data[0]: data[1].sauvegarde()})
+        return (tab)
+
     def colision(self, index, tab=None) -> int:
         """
         Lorsqu'on assigne une clé, si la clé est déjà prise, on doit faire un décalage en cas de collision.

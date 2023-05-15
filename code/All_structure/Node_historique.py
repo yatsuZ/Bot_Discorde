@@ -17,6 +17,14 @@ class PileH:
         self.size = 0
         self.last_Node = None
 
+    def sauvegarde(self):
+        tab = []
+        index = self.last_Node
+        while index != None:
+            tab.append(index.data)
+            index = index.next
+        return tab
+
     def check_unique(self, data):
         index = self.last_Node
         while index :

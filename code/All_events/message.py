@@ -43,6 +43,7 @@ def add_event_on_message(yassbot : commands.Bot, List_serveur : List_Serveur):
             if command:
                 serveur.historique.push(message)
                 await yassbot.process_commands(message)
+        All_Serveurs.sauvegarde()
 
     return Description
 

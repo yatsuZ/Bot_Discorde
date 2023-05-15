@@ -12,5 +12,7 @@ def add_all_events(yassbot : commands.Bot, mon_id : int, All_serveurs : List_Ser
     description_events = description_events + All_events.add_event_on_message(yassbot, All_serveurs)
 
     description_events = description_events + All_events.add_event_message_suprimer(yassbot)
+    
+    description_events = description_events + All_events.add_event_disconecte(yassbot)
 
     All_events.add_event_reaction(yassbot, All_serveurs, description_commandes, description_events)

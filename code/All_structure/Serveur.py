@@ -5,6 +5,7 @@ from All_structure.commande_aide import Commande_aide
 from All_structure.commande_devinette import Commande_devinette
 from All_structure.dico import Dico
 import discord
+import json
 
 class Serveur_Discorde:
     def __init__(self, id_serveur):
@@ -16,6 +17,13 @@ class Serveur_Discorde:
         self.Commande_aide = Commande_aide()
         self.Commande_devinette = Commande_devinette()
     
+    def sauvegarde(self):
+        dico = {
+            "id_serveur" : self.id_serveur,
+            "historique" : self.historique.sauvegarde()
+        }
+        return dico
+
     async def inactif_commande_historique(self):
         await self.Commande_Historique.inactif()
 
@@ -146,3 +154,17 @@ class List_Serveur:
     
     async def inactif_commande_historique(self, id_serv):
         await self.get_serveur(id_serv).inactif_commande_historique()
+    
+    def sauvegarde(self):
+        """
+        Sauvegarde tout en format json
+        # Convertir les données en un format JSON
+        # Renvoyer les données au format JSON
+        """
+        data = {
+            "List_Serveur" : self.list_serveur.sauvegarde()
+        }
+
+        with open("yassbot.json", "w") as fichier:
+            json.dump(data, fichier)
+
